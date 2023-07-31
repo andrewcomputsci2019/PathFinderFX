@@ -1,8 +1,6 @@
 package com.andrewcomputsci.pathfinderfx.view;
 
 import com.andrewcomputsci.pathfinderfx.Model.Cell;
-import com.andrewcomputsci.pathfinderfx.Model.CellType;
-import javafx.beans.value.ObservableObjectValue;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 

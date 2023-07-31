@@ -2,8 +2,6 @@ package com.andrewcomputsci.pathfinderfx.view;
 
 import com.andrewcomputsci.pathfinderfx.Model.CellState;
 import com.andrewcomputsci.pathfinderfx.Utils.Validators;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 

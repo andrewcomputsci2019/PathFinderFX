@@ -1,7 +1,5 @@
 package com.andrewcomputsci.pathfinderfx;
 
-import com.andrewcomputsci.pathfinderfx.Model.CellState;
-import com.andrewcomputsci.pathfinderfx.view.CellRectange;
 import com.andrewcomputsci.pathfinderfx.view.PathFinderVisualizer;
 import com.andrewcomputsci.pathfinderfx.view.SideBar;
 import javafx.application.Application;
@@ -10,7 +8,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
