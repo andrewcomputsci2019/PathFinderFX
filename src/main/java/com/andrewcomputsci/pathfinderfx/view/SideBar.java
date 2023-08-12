@@ -1,11 +1,9 @@
 package com.andrewcomputsci.pathfinderfx.view;
 
+import com.andrewcomputsci.pathfinderfx.Model.CellType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -13,6 +11,10 @@ import javafx.scene.text.Font;
 public class SideBar {
     private VBox rootContainer;
     private ScrollPane scrollPane;
+    private Button changeGridSizeButton;
+    private TextField gridSizeTextField;
+    private VBox gridSizeWrapper;
+    private ComboBox<CellType> tileTypeComboBox;
 
     public SideBar() {
         rootContainer = new VBox();
@@ -24,26 +26,31 @@ public class SideBar {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(rootContainer);
         scrollPane.setStyle("-fx-border-width: 1px; -fx-border-color: red;");
-        initUi();
+        initGridSizeUi();
     }
 
-    private void initUi() {
-        VBox wrapper = new VBox();
-        wrapper.setAlignment(Pos.CENTER);
-        wrapper.setPrefHeight(50.0);
-        wrapper.setStyle("-fx-border-width: 2px; -fx-border-radius: 5px; -fx-border-color: gray;");
+    private void initGridSizeUi() {
+        gridSizeWrapper = new VBox();
+        gridSizeWrapper.setAlignment(Pos.CENTER);
+        gridSizeWrapper.setPrefHeight(65.0);
+        gridSizeWrapper.setStyle("-fx-border-width: 2px; -fx-border-radius: 5px; -fx-border-color: gray;");
         HBox box = new HBox();
         box.setAlignment(Pos.CENTER);
-        VBox.setMargin(wrapper,new Insets(2.5));
+        VBox.setMargin(gridSizeWrapper,new Insets(2.5));
         box.setSpacing(5.0);
         Label label =  new Label();
-        label.setFont(new Font(12));
+        label.setFont(new Font(13));
         label.setText("Grid Size: ");
-        TextField field = new TextField();
-        field.setPromptText("25,25");
-        box.getChildren().addAll(label,field);
-        wrapper.getChildren().addAll(box,new Button("Click Me"));
-        rootContainer.getChildren().add(wrapper);
+        gridSizeTextField = new TextField();
+        gridSizeTextField.setPromptText("25,25");
+        box.getChildren().addAll(label,gridSizeTextField);
+        changeGridSizeButton = new Button("Change Grid Size");
+        gridSizeWrapper.getChildren().addAll(box, changeGridSizeButton);
+        gridSizeWrapper.setSpacing(5.0);
+        rootContainer.getChildren().add(gridSizeWrapper);
+    }
+    public void initTilePicker(){
+
     }
 
     public ScrollPane getRootContent(){
