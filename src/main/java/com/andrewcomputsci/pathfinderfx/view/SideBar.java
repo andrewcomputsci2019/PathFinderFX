@@ -1,5 +1,6 @@
 package com.andrewcomputsci.pathfinderfx.view;
 
+import atlantafx.base.layout.InputGroup;
 import atlantafx.base.theme.Styles;
 import atlantafx.base.theme.Tweaks;
 import com.andrewcomputsci.pathfinderfx.Model.Algorithm;
@@ -117,7 +118,7 @@ public class SideBar {
                 }
             }
         });
-        algorithmSelectionBox.setItems(FXCollections.observableArrayList(Algorithm.AStar,Algorithm.BellmanFord,Algorithm.BFS,Algorithm.BFSGreedy,Algorithm.DFS,Algorithm.WaveFront));
+        algorithmSelectionBox.setItems(FXCollections.observableArrayList(Algorithm.AStar,Algorithm.BFS,Algorithm.BFSGreedy,Algorithm.DFS,Algorithm.WaveFront));
         algorithmSelectionBox.getSelectionModel().selectFirst();
         algorithmSelectionWrapper.getChildren().addAll(algorithmSelectionLabel,algorithmSelectionBox);
         heuristicSelectionWrapper = new HBox(2.5);
