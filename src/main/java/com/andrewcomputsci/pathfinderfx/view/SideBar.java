@@ -45,8 +45,8 @@ public class SideBar {
         VBox.setMargin(gridSizeGroupWrapper,new Insets(2.5));
         gridSizeLabelWrapper.setSpacing(2.5);
         Label gridSizeLabel =  new Label();
-        gridSizeLabel.setFont(new Font(13));
-        gridSizeLabel.setText("Grid Size: ");
+        gridSizeLabel.setText("Grid Size:");
+        gridSizeLabel.getStyleClass().addAll(Styles.TEXT,Styles.ACCENT);
         gridSizeTextField = new TextField();
         gridSizeTextField.setPromptText("25,25");
         gridSizeLabelWrapper.getChildren().addAll(gridSizeLabel,gridSizeTextField);
@@ -65,8 +65,8 @@ public class SideBar {
         tileTypeWrapper.setStyle("-fx-border-width: 2px; -fx-border-radius: 5px; -fx-border-color: gray;");
         tileTypeWrapper.setAlignment(Pos.CENTER);
         VBox.setMargin(tileTypeWrapper,new Insets(2.5));
-        Label tileTypeLabel = new Label("TileType: ");
-        tileTypeLabel.setFont(new Font(13));
+        Label tileTypeLabel = new Label("TileType:");
+        tileTypeLabel.getStyleClass().addAll(Styles.TEXT,Styles.ACCENT);
         tileTypeComboBox = new ComboBox<>();
         tileTypeComboBox.getStyleClass().add(Tweaks.ALT_ICON);
         tileTypeComboBox.setCellFactory(param -> new ListCell<>(){
