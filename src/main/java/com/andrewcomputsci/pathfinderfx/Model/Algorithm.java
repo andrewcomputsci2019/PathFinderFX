@@ -4,7 +4,6 @@ public enum Algorithm {
     AStar,
     BFS,
     DFS,
-    BellmanFord,
     WaveFront,
     BFSGreedy
 }
