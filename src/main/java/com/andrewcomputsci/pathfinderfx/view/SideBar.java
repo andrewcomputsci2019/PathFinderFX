@@ -1,5 +1,7 @@
 package com.andrewcomputsci.pathfinderfx.view;
 
+import atlantafx.base.theme.Styles;
+import atlantafx.base.theme.Tweaks;
 import com.andrewcomputsci.pathfinderfx.Model.CellType;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -49,6 +51,8 @@ public class SideBar {
         gridSizeTextField.setPromptText("25,25");
         gridSizeLabelWrapper.getChildren().addAll(gridSizeLabel,gridSizeTextField);
         changeGridSizeButton = new Button("Change Current Grid");
+        changeGridSizeButton.getStyleClass().add(Styles.ACCENT);
+        changeGridSizeButton.setMnemonicParsing(true);
         changeGridSizeButton.setFont(new Font(13));
         gridSizeGroupWrapper.getChildren().addAll(gridSizeLabelWrapper, changeGridSizeButton);
         gridSizeGroupWrapper.setSpacing(4.0);
@@ -59,11 +63,12 @@ public class SideBar {
         tileTypeWrapper.setPrefHeight(65.0);
         tileTypeWrapper.setSpacing(5.0);
         tileTypeWrapper.setStyle("-fx-border-width: 2px; -fx-border-radius: 5px; -fx-border-color: gray;");
-        tileTypeWrapper.setAlignment(Pos.CENTER_LEFT);
+        tileTypeWrapper.setAlignment(Pos.CENTER);
         VBox.setMargin(tileTypeWrapper,new Insets(2.5));
         Label tileTypeLabel = new Label("TileType: ");
         tileTypeLabel.setFont(new Font(13));
         tileTypeComboBox = new ComboBox<>();
+        tileTypeComboBox.getStyleClass().add(Tweaks.ALT_ICON);
         tileTypeComboBox.setCellFactory(param -> new ListCell<>(){
 
             @Override
