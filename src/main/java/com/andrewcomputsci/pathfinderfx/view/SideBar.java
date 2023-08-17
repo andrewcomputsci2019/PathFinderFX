@@ -29,6 +29,15 @@ public class SideBar {
     private ComboBox<Algorithm> algorithmSelectionBox;
     private ComboBox<Heuristic> heuristicSelectionBox;
 
+    private VBox gridCustomizationWrapper;
+    private HBox gridCustomizationHorizontalLayout;
+    private Button addRandomWeights;
+    private Button addRandomWalls;
+    private VBox gridMazeGenerationSection;
+    private InputGroup mazeGroup;
+    private Button mazeGenButton;
+
+
 
     public SideBar() {
         rootContainer = new VBox();
@@ -43,6 +52,7 @@ public class SideBar {
         initGridSizeUi();
         initTilePicker();
         initAlgorithmPicker();
+        initGridCustomizationSection();
     }
 
     private void initGridSizeUi() {
@@ -153,6 +163,25 @@ public class SideBar {
         VBox.setMargin(algorithmSectionWrapper,new Insets(0,2.5,0,2.5));
         algorithmSectionWrapper.setStyle("-fx-border-width: 2px; -fx-border-radius: 5px; -fx-border-color: gray;");
         rootContainer.getChildren().add(algorithmSectionWrapper);
+    }
+    private void initGridCustomizationSection(){
+        gridCustomizationHorizontalLayout = new HBox(2.5);
+        gridCustomizationHorizontalLayout.setPrefHeight(65);
+        gridCustomizationHorizontalLayout.setAlignment(Pos.CENTER);
+        gridCustomizationHorizontalLayout.setStyle("-fx-border-width: 2px; -fx-border-radius: 5px; -fx-border-color: gray;");
+        Label gridCusLabel = new Label("Random Grid Gen:");
+        gridCusLabel.getStyleClass().addAll(Styles.TEXT,Styles.ACCENT);
+        addRandomWeights = new Button("Weight");
+        addRandomWalls = new Button("Walls");
+        addRandomWalls.getStyleClass().addAll(Styles.ACCENT,Styles.SMALL);
+        addRandomWeights.getStyleClass().addAll(Styles.ACCENT,Styles.SMALL);
+        gridCustomizationHorizontalLayout.getChildren().addAll(gridCusLabel,addRandomWalls,addRandomWeights);
+        VBox.setMargin(gridCustomizationHorizontalLayout,new Insets(0,2.5,0,2.5));
+        rootContainer.getChildren().add(gridCustomizationHorizontalLayout);
+    }
+
+   private void initMazeGenerationSection(){
+
     }
 
     public ScrollPane getRootContent(){
