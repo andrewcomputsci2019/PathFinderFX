@@ -48,6 +48,13 @@ public class PathFinderVisualizer {
         return cellGrid;
     }
 
+    public static int getDefaultWidth(){
+        return DEFAULT_WIDTH;
+    }
+    public static int getDefaultHeight(){
+        return DEFAULT_HEIGHT;
+    }
+
     public GridPane getGridNode() {
         return grid;
     }

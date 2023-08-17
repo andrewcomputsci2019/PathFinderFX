@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 
 
 public class PathFinderApplication extends Application {
-    private static int DEFAULT_WIDTH = 1005;
-    private static int DEFAULT_HEIGHT = 1005;
+    private static int DEFAULT_WIDTH = 1000;
+    private static int DEFAULT_HEIGHT = 800;
     @Override
     public void start(Stage primaryStage) throws Exception {
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
@@ -27,7 +27,8 @@ public class PathFinderApplication extends Application {
         scrollPane.setMinWidth(255);
         scrollPane.setMinHeight(400.0);
         splitPane.getItems().addAll(scrollPane,grid);
-        splitPane.setDividerPosition(0,.30);
+        splitPane.setDividerPosition(0,.30); //initial view split
+        SplitPane.setResizableWithParent(scrollPane,false); //make sure grid grows over sidebar during resize
         Scene scene = new Scene(splitPane,DEFAULT_WIDTH,DEFAULT_HEIGHT);
         primaryStage.setTitle("Path FinderFX");
         primaryStage.setResizable(true);
