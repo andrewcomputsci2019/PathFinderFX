@@ -20,7 +20,7 @@ public enum CellType {
      */
     Traversable,
     /**
-     * Repersents the starting node in the grid
+     * Represents the starting node in the grid
      */
     Source,
     /**
