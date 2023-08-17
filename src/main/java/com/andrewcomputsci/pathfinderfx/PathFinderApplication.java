@@ -1,5 +1,7 @@
 package com.andrewcomputsci.pathfinderfx;
 
+import atlantafx.base.theme.PrimerDark;
+import atlantafx.base.theme.PrimerLight;
 import com.andrewcomputsci.pathfinderfx.view.PathFinderVisualizer;
 import com.andrewcomputsci.pathfinderfx.view.SideBar;
 import javafx.application.Application;
@@ -16,15 +18,16 @@ public class PathFinderApplication extends Application {
     private static int DEFAULT_HEIGHT = 1005;
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         SplitPane splitPane = new SplitPane();
         PathFinderVisualizer visualizer = new PathFinderVisualizer();
         SideBar bar = new SideBar();
         GridPane grid = visualizer.getGridNode();
         ScrollPane scrollPane = bar.getRootContent();
-        scrollPane.setMaxWidth(225.0);
-        scrollPane.setMinWidth(225.0);
+        scrollPane.setMinWidth(255);
         scrollPane.setMinHeight(400.0);
         splitPane.getItems().addAll(scrollPane,grid);
+        splitPane.setDividerPosition(0,.30);
         Scene scene = new Scene(splitPane,DEFAULT_WIDTH,DEFAULT_HEIGHT);
         primaryStage.setTitle("Path FinderFX");
         primaryStage.setResizable(true);
