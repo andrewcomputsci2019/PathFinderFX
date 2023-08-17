@@ -5,10 +5,10 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 
-public class CellRectange extends Rectangle {
+public class CellRectangle extends Rectangle {
     private Cell innerCell;
 
-    public CellRectange() {
+    public CellRectangle() {
         super();
         innerCell = new Cell();
         innerCell.stateProperty().addListener((observable, oldValue, newValue) -> {
@@ -16,7 +16,7 @@ public class CellRectange extends Rectangle {
         });
     }
 
-    public CellRectange(double width, double height) {
+    public CellRectangle(double width, double height) {
         super(width, height);
         innerCell = new Cell();
         innerCell.stateProperty().addListener((observable, oldValue, newValue) -> {
@@ -24,12 +24,12 @@ public class CellRectange extends Rectangle {
         });
     }
 
-    public CellRectange(double width, double height, Paint fill) {
+    public CellRectangle(double width, double height, Paint fill) {
         super(width, height, fill);
 
     }
 
-    public CellRectange(double x, double y, double width, double height) {
+    public CellRectangle(double x, double y, double width, double height) {
         super(x, y, width, height);
 
     }

@@ -14,7 +14,7 @@ public class PathFinderVisualizer {
     private int height;
     //View Components
     private GridPane grid;
-    private CellRectange[] cellGrid;
+    private CellRectangle[] cellGrid;
 
     public PathFinderVisualizer() {
         this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -44,7 +44,7 @@ public class PathFinderVisualizer {
         return height;
     }
 
-    public CellRectange[] getCellGrid() {
+    public CellRectangle[] getCellGrid() {
         return cellGrid;
     }
 
@@ -105,12 +105,12 @@ public class PathFinderVisualizer {
     }
 
     /**
-     * Method that allocates the Cell Grid and fills it with {@link CellRectange}
+     * Method that allocates the Cell Grid and fills it with {@link CellRectangle}
      */
     private void initGrid() {
-        cellGrid = new CellRectange[width * height];
+        cellGrid = new CellRectangle[width * height];
         for (int i = 0; i < (width * height); i++) {
-            CellRectange rectangle = new CellRectange();
+            CellRectangle rectangle = new CellRectangle();
             cellGrid[i] = rectangle;
             cellGrid[i].setFill(Color.WHITE);
             cellGrid[i].getInnerCell().stateProperty().addListener((observable, oldValue, newValue) -> {
