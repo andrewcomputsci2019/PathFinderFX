@@ -2,6 +2,7 @@ package com.andrewcomputsci.pathfinderfx;
 
 import atlantafx.base.theme.PrimerDark;
 import atlantafx.base.theme.PrimerLight;
+import com.andrewcomputsci.pathfinderfx.Controllers.GridController;
 import com.andrewcomputsci.pathfinderfx.view.PathFinderVisualizer;
 import com.andrewcomputsci.pathfinderfx.view.SideBar;
 import javafx.application.Application;
@@ -35,6 +36,7 @@ public class PathFinderApplication extends Application {
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(600.0);
         primaryStage.setMinHeight(600.0);
+        new GridController(visualizer,bar);
         primaryStage.show();
     }
     private void alt(){
