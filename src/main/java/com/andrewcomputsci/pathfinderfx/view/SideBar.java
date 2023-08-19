@@ -214,10 +214,9 @@ public class SideBar {
                     }
                 }
             });
-            mazeTypeComboBox.setPrefWidth(125);
+            mazeTypeComboBox.setPrefWidth(130);
             mazeTypeComboBox.setItems(FXCollections.observableArrayList(MazeType.BinaryTree,MazeType.DFSRandom,MazeType.Kruskal,MazeType.Prims,MazeType.RecursiveDivide));
             mazeTypeComboBox.getSelectionModel().selectFirst();
-            HBox.setHgrow(mazeTypeComboBox, Priority.NEVER);
             mazeGroup = new InputGroup(mazeTypeComboBox,mazeGenButton);
             gridMazeGenerationSection.getChildren().addAll(mazeLabel,mazeGroup);
             VBox.setMargin(gridMazeGenerationSection,new Insets(0,2.5,0,2.5));
