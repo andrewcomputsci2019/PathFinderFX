@@ -52,13 +52,11 @@ public class SideBar {
     public SideBar() {
         rootContainer = new VBox();
         rootContainer.setAlignment(Pos.TOP_CENTER);
-        rootContainer.setStyle("-fx-border-width: 1px; -fx-border-color: red;");
         rootContainer.setSpacing(12.5);
         scrollPane = new ScrollPane();
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(rootContainer);
-        scrollPane.setStyle("-fx-border-width: 1px; -fx-border-color: red;");
         initGridSizeUi();
         initTilePicker();
         initAlgorithmPicker();
