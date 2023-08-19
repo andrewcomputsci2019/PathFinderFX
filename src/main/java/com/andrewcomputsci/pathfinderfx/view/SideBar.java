@@ -13,7 +13,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import org.kordamp.ikonli.javafx.FontIcon;
+
+import static javafx.scene.paint.Color.rgb;
 
 public class SideBar {
     private VBox rootContainer;
@@ -39,9 +44,9 @@ public class SideBar {
     private Button mazeGenButton;
     private ComboBox<MazeType> mazeTypeComboBox;
 
-    private HBox ControlSectionContainer;
+    private HBox controlSectionContainer;
 
-    private MenuButton controlBar;
+    private SplitMenuButton controlBar;
     private MenuItem startButton;
     private MenuItem clearButton;
     private MenuItem exitButton;
@@ -64,6 +69,7 @@ public class SideBar {
         initAlgorithmPicker();
         initGridCustomizationSection();
         initMazeGenerationSection();
+        initControlUi();
     }
 
     private void initGridSizeUi() {
@@ -221,7 +227,25 @@ public class SideBar {
             rootContainer.getChildren().add(gridMazeGenerationSection);
     }
     private void initControlUi(){
-
+            controlSectionContainer = new HBox(2.5);
+            controlSectionContainer.setStyle("-fx-border-width: 2px; -fx-border-radius: 5px; -fx-border-color: gray;");
+            controlSectionContainer.setAlignment(Pos.CENTER);
+            FontIcon start = new FontIcon("bi-play-fill");
+            FontIcon clear = new FontIcon("bi-eraser-fill");
+            FontIcon stop = new FontIcon("bi-stop-fill");
+            startButton = new MenuItem("Start");
+            startButton.setGraphic(start);
+            clearButton = new MenuItem("Clear Grid");
+            clearButton.setGraphic(clear);
+            exitButton = new MenuItem("exit");
+            exitButton.setGraphic(stop);
+            controlBar = new SplitMenuButton(startButton,clearButton,exitButton);
+            controlBar.setPrefWidth(165);
+            controlBar.setText("Program Control");
+            HBox.setMargin(controlBar,new Insets(5,0,5,0));
+            controlSectionContainer.getChildren().add(controlBar);
+            VBox.setMargin(controlSectionContainer,new Insets(0,2.5,0,2.5));
+            rootContainer.getChildren().add(controlSectionContainer);
     }
 
     public ScrollPane getRootContent(){
