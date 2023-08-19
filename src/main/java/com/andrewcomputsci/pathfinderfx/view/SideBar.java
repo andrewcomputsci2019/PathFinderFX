@@ -13,12 +13,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import org.kordamp.ikonli.javafx.FontIcon;
-
-import static javafx.scene.paint.Color.rgb;
 
 public class SideBar {
     private VBox rootContainer;
@@ -34,8 +30,6 @@ public class SideBar {
     private HBox heuristicSelectionWrapper;
     private ComboBox<Algorithm> algorithmSelectionBox;
     private ComboBox<Heuristic> heuristicSelectionBox;
-
-    private VBox gridCustomizationWrapper;
     private HBox gridCustomizationHorizontalLayout;
     private Button addRandomWeights;
     private Button addRandomWalls;
@@ -250,5 +244,57 @@ public class SideBar {
 
     public ScrollPane getRootContent(){
         return scrollPane;
+    }
+
+    public Button getChangeGridSizeButton() {
+        return changeGridSizeButton;
+    }
+
+    public TextField getGridSizeTextField() {
+        return gridSizeTextField;
+    }
+
+    public ComboBox<CellType> getTileTypeComboBox() {
+        return tileTypeComboBox;
+    }
+
+    public ComboBox<Algorithm> getAlgorithmSelectionBox() {
+        return algorithmSelectionBox;
+    }
+
+    public ComboBox<Heuristic> getHeuristicSelectionBox() {
+        return heuristicSelectionBox;
+    }
+
+    public Button getAddRandomWeights() {
+        return addRandomWeights;
+    }
+
+    public Button getAddRandomWalls() {
+        return addRandomWalls;
+    }
+
+    public Button getMazeGenButton() {
+        return mazeGenButton;
+    }
+
+    public ComboBox<MazeType> getMazeTypeComboBox() {
+        return mazeTypeComboBox;
+    }
+
+    public SplitMenuButton getControlBar() {
+        return controlBar;
+    }
+
+    public MenuItem getStartButton() {
+        return startButton;
+    }
+
+    public MenuItem getClearButton() {
+        return clearButton;
+    }
+
+    public MenuItem getExitButton() {
+        return exitButton;
     }
 }
