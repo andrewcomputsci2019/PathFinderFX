@@ -6,6 +6,7 @@ import atlantafx.base.theme.Tweaks;
 import com.andrewcomputsci.pathfinderfx.Model.Algorithm;
 import com.andrewcomputsci.pathfinderfx.Model.CellType;
 import com.andrewcomputsci.pathfinderfx.Model.Heuristic;
+import com.andrewcomputsci.pathfinderfx.Model.MazeType;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -33,9 +34,18 @@ public class SideBar {
     private HBox gridCustomizationHorizontalLayout;
     private Button addRandomWeights;
     private Button addRandomWalls;
-    private VBox gridMazeGenerationSection;
+    private HBox gridMazeGenerationSection;
     private InputGroup mazeGroup;
     private Button mazeGenButton;
+    private ComboBox<MazeType> mazeTypeComboBox;
+
+    private HBox ControlSectionContainer;
+
+    private MenuButton controlBar;
+    private MenuItem startButton;
+    private MenuItem clearButton;
+    private MenuItem exitButton;
+
 
 
 
@@ -53,6 +63,7 @@ public class SideBar {
         initTilePicker();
         initAlgorithmPicker();
         initGridCustomizationSection();
+        initMazeGenerationSection();
     }
 
     private void initGridSizeUi() {
@@ -181,6 +192,35 @@ public class SideBar {
     }
 
    private void initMazeGenerationSection(){
+            gridMazeGenerationSection = new HBox(2.5);
+            gridMazeGenerationSection.setAlignment(Pos.CENTER);
+            gridMazeGenerationSection.setStyle("-fx-border-width: 2px; -fx-border-radius: 5px; -fx-border-color: gray;");
+            gridMazeGenerationSection.setPrefHeight(65.0);
+            Label mazeLabel = new Label("Create Maze:");
+            mazeLabel.getStyleClass().addAll(Styles.TEXT,Styles.ACCENT);
+            mazeGenButton = new Button("Go");
+            mazeGenButton.getStyleClass().addAll(Styles.ACCENT);
+            mazeTypeComboBox = new ComboBox<>();
+            mazeTypeComboBox.getStyleClass().addAll(Tweaks.ALT_ICON);
+            mazeTypeComboBox.setCellFactory(param -> new ListCell<>(){
+                @Override
+                protected void updateItem(MazeType item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty){
+                        setText(null);
+                    }else{
+                        setText(item.name());
+                    }
+                }
+            });
+            mazeTypeComboBox.setItems(FXCollections.observableArrayList(MazeType.BinaryTree,MazeType.DFSRandom,MazeType.Kruskal,MazeType.Prims,MazeType.RecursiveDivide));
+            mazeTypeComboBox.getSelectionModel().selectFirst();
+            mazeGroup = new InputGroup(mazeTypeComboBox,mazeGenButton);
+            gridMazeGenerationSection.getChildren().addAll(mazeLabel,mazeGroup);
+            VBox.setMargin(gridMazeGenerationSection,new Insets(0,2.5,0,2.5));
+            rootContainer.getChildren().add(gridMazeGenerationSection);
+    }
+    private void initControlUi(){
 
     }
 
