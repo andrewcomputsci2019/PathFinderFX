@@ -12,6 +12,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -213,8 +214,10 @@ public class SideBar {
                     }
                 }
             });
+            mazeTypeComboBox.setPrefWidth(125);
             mazeTypeComboBox.setItems(FXCollections.observableArrayList(MazeType.BinaryTree,MazeType.DFSRandom,MazeType.Kruskal,MazeType.Prims,MazeType.RecursiveDivide));
             mazeTypeComboBox.getSelectionModel().selectFirst();
+            HBox.setHgrow(mazeTypeComboBox, Priority.NEVER);
             mazeGroup = new InputGroup(mazeTypeComboBox,mazeGenButton);
             gridMazeGenerationSection.getChildren().addAll(mazeLabel,mazeGroup);
             VBox.setMargin(gridMazeGenerationSection,new Insets(0,2.5,0,2.5));
