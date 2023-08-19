@@ -1,6 +1,7 @@
 package com.andrewcomputsci.pathfinderfx.Controllers;
 
 import atlantafx.base.controls.ToggleSwitch;
+import atlantafx.base.theme.Styles;
 import com.andrewcomputsci.pathfinderfx.view.CellRectangle;
 import com.andrewcomputsci.pathfinderfx.view.PathFinderVisualizer;
 import com.andrewcomputsci.pathfinderfx.view.SideBar;
@@ -31,23 +32,33 @@ public class GridController {
             exactMode = new SimpleBooleanProperty(false);
             toggleSwitch = new ToggleSwitch("Exact Mode");
             toggleSwitch.setTooltip(new Tooltip("Option that forces some algorithms to expand search past first solution namely DFS"));
+
+            toggleSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                toggleSwitch.pseudoClassStateChanged(Styles.STATE_SUCCESS,newValue);
+            });
             exactMode.bind(toggleSwitch.selectedProperty());
-            settingMenu = new ContextMenu(new CustomMenuItem(toggleSwitch));
+            CustomMenuItem item = new CustomMenuItem(toggleSwitch);
+            item.setHideOnClick(false);
+            settingMenu = new ContextMenu(item);
             addContextMenu();
     }
 
 
     private void addContextMenu(){
         grid.getGridNode().setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.SECONDARY)){
+            if (event.isControlDown() && event.getButton().equals(MouseButton.SECONDARY)){
                 System.out.println("Exact Value: "  + exactMode.get());
                 settingMenu.show(grid.getGridNode(),event.getScreenX(),event.getScreenY());
+            }else if(settingMenu.isShowing()){
+                settingMenu.hide();
             }
         });
     }
 
     private void initCellControls(){
+        for(CellRectangle rect: grid.getCellGrid()){
 
+        }
     }
 
 
