@@ -1,5 +1,6 @@
 package com.andrewcomputsci.pathfinderfx.Solver;
 
+import com.andrewcomputsci.pathfinderfx.Model.Statistics;
 import com.andrewcomputsci.pathfinderfx.view.CellRectangle;
 
 import java.util.*;
@@ -7,7 +8,7 @@ import java.util.*;
 public class BFS implements PathFinderSolver{
 
     @Override
-    public List<CellRectangle> solve(CellRectangle[] grid, int width, int height) {
+    public Statistics solve(CellRectangle[] grid, int width, int height) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
