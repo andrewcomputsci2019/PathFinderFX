@@ -3,15 +3,15 @@ package com.andrewcomputsci.pathfinderfx.Model;
 import com.andrewcomputsci.pathfinderfx.view.CellRectangle;
 
 public class Message {
-    private final CellType newType;
+    private final CellState newType;
     private final CellRectangle cellToBeChanged;
 
-    public Message(CellRectangle cell, CellType type){
+    public Message(CellRectangle cell, CellState type){
         cellToBeChanged = cell;
         newType = type;
     }
 
-    public CellType getNewType() {
+    public CellState getNewType() {
         return newType;
     }
 
