@@ -1,14 +1,16 @@
 package com.andrewcomputsci.pathfinderfx.Solver;
 
+import com.andrewcomputsci.pathfinderfx.Model.Message;
 import com.andrewcomputsci.pathfinderfx.Model.Statistics;
 import com.andrewcomputsci.pathfinderfx.view.CellRectangle;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BFS implements PathFinderSolver{
 
     @Override
-    public Statistics solve(CellRectangle[] grid, int width, int height) {
+    public Statistics solve(CellRectangle[] grid, int width, int height, ConcurrentLinkedQueue<Message> queue) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
