@@ -7,21 +7,21 @@ public enum CellState {
     /**
      * Represents that a cell has not been visited yet
      */
-    Unvisited,
+    Unvisited, //no-color
     /**
      * Represents that a cell has been visited
      */
-    Visited,
+    Visited, //#fcdb03 maybe
     /**
      * Represents that a cell is currently being viewed
      */
-    Current,
+    Current, //red
     /**
      * Represents that a cell has been added to search
      */
-    Added,
+    Expanded, //yellow
     /**
      * Represents that a cell is a part of final path
      */
-    Path
+    Path //magenta
 }
