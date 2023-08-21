@@ -16,7 +16,7 @@ public class BFS implements PathFinderSolver {
         boolean[] visited = new boolean[grid.length];
         int[] predecessorTable = new int[grid.length];
         Arrays.fill(visited, false);
-        Queue<int[]> searchQueue = new ArrayDeque<>();
+        Queue<int[]> searchQueue = new ArrayDeque<>(50);
         int passes = 0;
         long deltaTime;
         for (int i = 0; i < grid.length; i++) {
@@ -27,11 +27,13 @@ public class BFS implements PathFinderSolver {
         }
         deltaTime = System.nanoTime();
         while (!searchQueue.isEmpty()) {
-            int x = searchQueue.peek()[0];
-            int y = searchQueue.peek()[1];
+            int[] array = searchQueue.poll();
+            int x = array[0];
+            int y = array[1];
             queue.add(new Message(grid[y * width + x], CellState.Current));
             if ((y - 1) > -1 && !visited[(y - 1) * width + x] && !grid[(y - 1) * width + x].getInnerCell().getType().equals(CellType.Wall)) {
                 if (grid[(y - 1) * width + x].getInnerCell().getType().equals(CellType.Target)) {
+                    deltaTime = System.nanoTime() - deltaTime;
                     return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[(y - 1) * width + x], CellState.Expanded));
@@ -39,8 +41,9 @@ public class BFS implements PathFinderSolver {
                 searchQueue.add(new int[]{x, y - 1});
                 visited[(y - 1) * width + x] = true;
             }
-            if (x + 1 < width && !visited[y * width + (x + 1)] && !grid[y * width + (x + 1)].getInnerCell().getType().equals(CellType.Wall)) {
+            if ((x + 1) < width && !visited[y * width + (x + 1)] && !grid[y * width + (x + 1)].getInnerCell().getType().equals(CellType.Wall)) {
                 if (grid[y * width + (x + 1)].getInnerCell().getType().equals(CellType.Target)) {
+                    deltaTime = System.nanoTime() - deltaTime;
                     return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[y * width + (x + 1)], CellState.Expanded));
@@ -50,6 +53,7 @@ public class BFS implements PathFinderSolver {
             }
             if (((y + 1) < height) && !visited[(y + 1) * width + x] && !grid[(y + 1) * width + x].getInnerCell().getType().equals(CellType.Wall)) {
                 if (grid[(y + 1) * width + x].getInnerCell().getType().equals(CellType.Target)) {
+                    deltaTime = System.nanoTime() - deltaTime;
                     return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[(y + 1) * width + x], CellState.Expanded));
@@ -57,8 +61,9 @@ public class BFS implements PathFinderSolver {
                 predecessorTable[(y + 1) * width + x] = y * width + x;
                 visited[(y + 1) * width + x] = true;
             }
-            if ((x - 1) > -1 && !visited[y * width + (x - 1)] && !grid[y * width * (x - 1)].getInnerCell().getType().equals(CellType.Wall)) {
-                if (grid[y * width * (x - 1)].getInnerCell().getType().equals(CellType.Target)) {
+            if ((x - 1) > -1 && !visited[y * width + (x - 1)] && !grid[y * width + (x - 1)].getInnerCell().getType().equals(CellType.Wall)) {
+                if (grid[y * width + (x - 1)].getInnerCell().getType().equals(CellType.Target)) {
+                    deltaTime = System.nanoTime() - deltaTime;
                     return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[y * width + (x - 1)], CellState.Expanded));
@@ -66,20 +71,25 @@ public class BFS implements PathFinderSolver {
                 predecessorTable[y * width + (x - 1)] = y * width + x;
                 visited[y * width + (x - 1)] = true;
             }
+            visited[y*width+x] = true;
+            queue.add(new Message(grid[y*width+x],CellState.Visited));
             passes++;
         }
         return new Statistics(null, passes, System.nanoTime() - deltaTime, 0);
     }
 
     private static Statistics getStatistics(CellRectangle[] grid, int width, int[] predecessorTable, int passes, long deltaTime, int x, int y) {
-        List<CellRectangle> path = new ArrayList<>();
+        long sysTime = System.nanoTime();
+        System.out.println("[DEBUG] -- Creating Statistic set");
+        List<CellRectangle> path = new ArrayList<>(25);
         path.add(0, grid[y * width + x]);
         int index = y * width + x;
         while (predecessorTable[index] != -1) {
             index = predecessorTable[index];
             path.add(0, grid[index]);
         }
-        return new Statistics(path, passes, System.nanoTime() - deltaTime, path.size());
+        System.out.println("[DEBUG] -- Finished Creating SET: " + (System.nanoTime()-sysTime)+"ms");
+        return new Statistics(path, passes, deltaTime, path.size());
     }
 
 

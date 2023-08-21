@@ -12,7 +12,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -48,6 +47,7 @@ public class SideBar {
 
 
     private VBox statContainer;
+    private Label iterations;
     private Label pathFound;
     private Label pathCost;
     private Label deltaTime;
@@ -260,12 +260,14 @@ public class SideBar {
         VBox.setMargin(statContainer, new Insets(0, 2.5, 0, 2.5));
 
         pathFound = new Label("N/A");
+        iterations = new Label("N/A");
         pathCost = new Label("N/A");
         deltaTime = new Label("N/A");
 
         pathFound.getStyleClass().addAll(Styles.TEXT, Styles.TEXT_MUTED);
         pathCost.getStyleClass().addAll(Styles.TEXT, Styles.TEXT_MUTED);
         deltaTime.getStyleClass().addAll(Styles.TEXT, Styles.TEXT_MUTED);
+        iterations.getStyleClass().addAll(Styles.TEXT,Styles.TEXT_MUTED);
 
         pathFound.setAlignment(Pos.CENTER_LEFT);
         pathCost.setAlignment(Pos.CENTER_LEFT);
@@ -278,6 +280,15 @@ public class SideBar {
         pathLabel.getStyleClass().addAll(Styles.TEXT, Styles.ACCENT);
         pathLabel.setAlignment(Pos.CENTER_RIGHT);
         pathContainer.getChildren().addAll(pathLabel, pathFound);
+
+
+        HBox iterationContainer = new HBox(1);
+        iterationContainer.setAlignment(Pos.CENTER);
+        VBox.setMargin(iterationContainer,new Insets(2.5));
+        Label iterationsLabel = new Label("Total Iterations: ");
+        iterationsLabel.setAlignment(Pos.CENTER_RIGHT);
+        iterationsLabel.getStyleClass().addAll(Styles.TEXT,Styles.ACCENT);
+        iterationContainer.getChildren().addAll(iterationsLabel,iterations);
 
         HBox pathCostHBox = new HBox(1);
         pathCostHBox.setAlignment(Pos.CENTER);
@@ -295,7 +306,7 @@ public class SideBar {
         elaspedTimeLabel.setAlignment(Pos.CENTER_RIGHT);
         elapsedTimeBox.getChildren().addAll(elaspedTimeLabel, deltaTime);
 
-        statContainer.getChildren().addAll(pathContainer, pathCostHBox, elapsedTimeBox);
+        statContainer.getChildren().addAll(pathContainer,iterationContainer, pathCostHBox, elapsedTimeBox);
         statContainer.setStyle("-fx-border-width: 2px; -fx-border-radius: 5px; -fx-border-color: gray;");
         rootContainer.getChildren().add(statContainer);
 
@@ -367,5 +378,9 @@ public class SideBar {
 
     public Label getDeltaTime() {
         return deltaTime;
+    }
+
+    public Label getIterations() {
+        return iterations;
     }
 }

@@ -28,6 +28,7 @@ import javafx.util.Duration;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class GridController {
@@ -54,7 +55,7 @@ public class GridController {
     private SimpleBooleanProperty algorithmRunning;
 
     private ConcurrentLinkedQueue<Message> threadPipe;
-    private static final Executor algoExecutor = Executors.newSingleThreadExecutor(); //needs to be closed/stoped when application ends
+    public static final ExecutorService algoExecutor = Executors.newSingleThreadExecutor(); //needs to be closed/stopped when application ends
 
     //should use timeline to added ability to animate at a fixed interval
     public GridController(PathFinderVisualizer visualizer, SideBar sideBar){
@@ -92,7 +93,9 @@ public class GridController {
 
     }
 
+    private void addShutDownListener(){
 
+    }
     private void addContextMenu(){
         grid.getGridNode().setOnMouseClicked(event -> {
             if (event.isControlDown() && event.getButton().equals(MouseButton.SECONDARY)){
@@ -233,6 +236,7 @@ public class GridController {
                         animator.play();
                     });
                     task.setOnSucceeded(workerEvent ->{
+                        System.out.println("[DEBUG] -- Algorithm Finished");
                         algorithmRunning.set(false);
                         lastSet = task.getValue();
                         fillStatPage();
@@ -254,6 +258,7 @@ public class GridController {
     }
 
     private void drawPath(List<CellRectangle> path){
+        System.out.println("[DEBUG] -- Drawling solution Path");
         Timeline pathLine = new Timeline(new KeyFrame(Duration.millis(100),(action)->{
             CellRectangle rect = path.remove(0);
             rect.getInnerCell().stateProperty().set(CellState.Path);
@@ -268,9 +273,12 @@ public class GridController {
     }
 
     private void fillStatPage(){
-        sideBar.getDeltaTime().setText(String.format(".6%fms",lastSet.deltaTime()/(1E-6)));
+        System.out.println("[DEBUG] -- LAST SET: " + lastSet);
+        sideBar.getDeltaTime().setText(String.format("%3.6fms",lastSet.deltaTime()/(1E6)));
         sideBar.getPathFound().setText(lastSet.path()!=null?"True":"False");
         sideBar.getPathCost().setText(String.format("%d",lastSet.pathCost()));
+        sideBar.getIterations().setText(String.valueOf(lastSet.passes()));
     }
+
 }
 

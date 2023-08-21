@@ -13,6 +13,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.util.concurrent.Executors;
+
 
 public class PathFinderApplication extends Application {
     private static int DEFAULT_WIDTH = 1000;
@@ -38,6 +40,7 @@ public class PathFinderApplication extends Application {
         primaryStage.setMinHeight(600.0);
         new GridController(visualizer,bar);
         primaryStage.show();
+        primaryStage.setOnCloseRequest(event -> GridController.algoExecutor.shutdown());
     }
     private void alt(){
         AnchorPane pane = new AnchorPane();
@@ -64,6 +67,7 @@ public class PathFinderApplication extends Application {
     }
 
     public static void main(String[] args) {
+        Runtime.getRuntime().addShutdownHook(new Thread(GridController.algoExecutor::shutdown));
         launch(args);
     }
 }
