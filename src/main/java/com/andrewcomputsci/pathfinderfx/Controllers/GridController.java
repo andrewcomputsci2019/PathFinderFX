@@ -3,24 +3,32 @@ package com.andrewcomputsci.pathfinderfx.Controllers;
 import atlantafx.base.controls.ProgressSliderSkin;
 import atlantafx.base.controls.ToggleSwitch;
 import atlantafx.base.theme.Styles;
-import com.andrewcomputsci.pathfinderfx.Model.Cell;
+import com.andrewcomputsci.pathfinderfx.Model.CellState;
 import com.andrewcomputsci.pathfinderfx.Model.CellType;
+import com.andrewcomputsci.pathfinderfx.Model.Message;
+import com.andrewcomputsci.pathfinderfx.Model.Statistics;
+import com.andrewcomputsci.pathfinderfx.Solver.PathFinderSolver;
+import com.andrewcomputsci.pathfinderfx.Utils.AlgorithmFactory;
 import com.andrewcomputsci.pathfinderfx.view.CellRectangle;
 import com.andrewcomputsci.pathfinderfx.view.PathFinderVisualizer;
 import com.andrewcomputsci.pathfinderfx.view.SideBar;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.concurrent.Task;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
-import java.util.Timer;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class GridController {
     private PathFinderVisualizer grid;
@@ -38,6 +46,15 @@ public class GridController {
     private boolean targetPlaced;
 
     private boolean sourcePlaced;
+
+
+    private Timeline animator;
+    private Statistics lastSet;
+
+    private SimpleBooleanProperty algorithmRunning;
+
+    private ConcurrentLinkedQueue<Message> threadPipe;
+    private static final Executor algoExecutor = Executors.newSingleThreadExecutor(); //needs to be closed/stoped when application ends
 
     //should use timeline to added ability to animate at a fixed interval
     public GridController(PathFinderVisualizer visualizer, SideBar sideBar){
@@ -70,6 +87,8 @@ public class GridController {
             addContextMenu();
             addCellTypeListeners();
             initCellControls();
+            initTimeLine();
+            setUpControlMenuButtons();
 
     }
 
@@ -90,6 +109,7 @@ public class GridController {
         editableState = true;
         sourcePlaced = false;
         targetPlaced = false;
+        algorithmRunning = new SimpleBooleanProperty(false);
     }
 
     private void addCellTypeListeners(){
@@ -97,6 +117,13 @@ public class GridController {
         for(CellRectangle rect : grid.getCellGrid()){
             rect.getInnerCell().typeProperty().addListener((observable, oldValue, newValue) -> {
                 rect.setFill(newValue.getColor());
+            });
+            rect.getInnerCell().stateProperty().addListener((observable, oldValue, newValue) -> {
+                if(newValue.equals(CellState.Unvisited)){
+                    rect.setFill(rect.getInnerCell().getType().getColor());
+                }else {
+                    rect.setFill(newValue.getColor());
+                }
             });
         }
     }
@@ -118,7 +145,6 @@ public class GridController {
             row = (int) (event.getY()/percentHeight);
             System.out.println(col + " , " + row);
             CellRectangle item = (CellRectangle) ((Pane)grid.getGridNode().getChildren().get(row*grid.getWidth()+col)).getChildren().get(0);
-
             if(event.isPrimaryButtonDown()){
                 changeCellType(item);
             }else if(event.isSecondaryButtonDown()){
@@ -131,6 +157,9 @@ public class GridController {
         });
         for(CellRectangle rect: grid.getCellGrid()){
             rect.setOnMouseClicked(event -> {
+                if(!editableState){
+                    return;
+                }
                 if(event.getButton().equals(MouseButton.PRIMARY)){
                     changeCellType(rect);
                 }
@@ -142,6 +171,7 @@ public class GridController {
                 }
             });
         }
+
     }
 
     private void changeCellType(CellRectangle rect) {
@@ -152,9 +182,95 @@ public class GridController {
         if(type.equals(CellType.Source) && sourcePlaced){
             return;
         }
-        sourcePlaced = type.equals(CellType.Source);
-        targetPlaced = type.equals(CellType.Target);
+        sourcePlaced = type.equals(CellType.Source) || sourcePlaced;
+        targetPlaced = type.equals(CellType.Target) || targetPlaced;
         rect.getInnerCell().typeProperty().set(type);
+    }
+
+    private void initTimeLine(){
+        animator = new Timeline();
+        animator.rateProperty().bind(animationRateSlider.valueProperty());
+        animator.statusProperty().addListener((observable, oldValue, newValue) -> {
+            //add code here for when the animator stops or pauses
+            //two conditions either user skipped the animation or the animation finished
+            //if passed it was skipped
+            //if stopped animation ran its course
+            if(newValue.equals(Animation.Status.STOPPED) && !algorithmRunning.get()){
+                drawPath(lastSet.path());
+            }
+
+        });
+        animator.getKeyFrames().setAll(new KeyFrame(Duration.millis(50),(action)->{
+            System.out.println("Playing keyframe");
+        }));
+        animator.setCycleCount(Animation.INDEFINITE);
+    }
+
+    private void setUpControlMenuButtons(){
+            sideBar.getStartButton().setOnAction(event -> {
+
+                if(!algorithmRunning.get() && !animator.getStatus().equals(Animation.Status.RUNNING) && targetPlaced && sourcePlaced){
+                    System.out.println("Button Pressed");
+                    editableState = false;
+                    System.out.println("[DEBUG] -- grabbing path finder");
+                    PathFinderSolver solver = AlgorithmFactory.getPathFinder(sideBar.getAlgorithmSelectionBox().getValue());
+                    if(solver == null){
+                        editableState = true;
+                        System.out.println("[DEBUG] -- Method not supported yet");
+                        return;
+                    }
+                    threadPipe = new ConcurrentLinkedQueue<>();
+                    Task<Statistics> task = new Task<>() {
+                        @Override
+                        protected Statistics call() throws Exception {
+                            return solver.solve(grid.getCellGrid(), grid.getWidth(), grid.getHeight(), threadPipe);
+                        }
+                    };
+                    task.setOnScheduled(workerEvent -> {
+                        algorithmRunning.set(true);
+                    });
+                    task.setOnRunning(workerEvent ->{
+                        animator.play();
+                    });
+                    task.setOnSucceeded(workerEvent ->{
+                        algorithmRunning.set(false);
+                        lastSet = task.getValue();
+                        fillStatPage();
+                    });
+                    animator.getKeyFrames().setAll(new KeyFrame(Duration.millis(1000/60.0), actionEvent ->{
+                        if(algorithmRunning.get() || !threadPipe.isEmpty()){
+                            if(threadPipe.isEmpty()){
+                                return;
+                            }
+                            Message message = threadPipe.poll();
+                            message.getCellToBeChanged().getInnerCell().stateProperty().set(message.getNewType());
+                        }else{
+                            animator.stop();
+                        }
+                    }));
+                    algoExecutor.execute(task);
+                }
+            });
+    }
+
+    private void drawPath(List<CellRectangle> path){
+        Timeline pathLine = new Timeline(new KeyFrame(Duration.millis(100),(action)->{
+            CellRectangle rect = path.remove(0);
+            rect.getInnerCell().stateProperty().set(CellState.Path);
+        }));
+        pathLine.setCycleCount(path.size());
+        pathLine.setOnFinished((action)->{
+            editableState = true;
+            System.out.println("[DEBUG] -- Finished Drawling Path");
+        });
+        pathLine.setAutoReverse(false);
+        pathLine.play();
+    }
+
+    private void fillStatPage(){
+        sideBar.getDeltaTime().setText(String.format(".6%fms",lastSet.deltaTime()/(1E-6)));
+        sideBar.getPathFound().setText(lastSet.path()!=null?"True":"False");
+        sideBar.getPathCost().setText(String.format("%d",lastSet.pathCost()));
     }
 }
 

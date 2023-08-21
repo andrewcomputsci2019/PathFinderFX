@@ -34,6 +34,9 @@ public class DFS implements PathFinderSolver {
         while (!cellStack.empty()) {
             int x = cellStack.peek()[0];
             int y = cellStack.pop()[1];
+            if(visited[y*width+x]){
+                continue;
+            }
             queue.add(new Message(grid[y * width + x], CellState.Current));
             if (x - 1 > -1 && !visited[y * width + (x - 1)] && !grid[y * width + (x - 1)].getInnerCell().getType().equals(CellType.Wall)) {
                 if (grid[y * width + (x - 1)].getInnerCell().getType().equals(CellType.Target)) {

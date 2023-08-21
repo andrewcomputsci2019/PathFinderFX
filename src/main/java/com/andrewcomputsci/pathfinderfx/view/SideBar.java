@@ -237,12 +237,12 @@ public class SideBar {
         controlSectionContainer.setAlignment(Pos.CENTER);
         FontIcon start = new FontIcon("bi-play-fill");
         FontIcon clear = new FontIcon("bi-eraser-fill");
-        FontIcon stop = new FontIcon("bi-stop-fill");
+        FontIcon stop = new FontIcon("bi-skip-end-fill");
         startButton = new MenuItem("Start");
         startButton.setGraphic(start);
         clearButton = new MenuItem("Clear Grid");
         clearButton.setGraphic(clear);
-        exitButton = new MenuItem("exit");
+        exitButton = new MenuItem("Skip");
         exitButton.setGraphic(stop);
         controlBar = new SplitMenuButton(startButton, clearButton, exitButton);
         controlBar.setPrefWidth(165);
@@ -355,5 +355,17 @@ public class SideBar {
 
     public MenuItem getExitButton() {
         return exitButton;
+    }
+
+    public Label getPathFound() {
+        return pathFound;
+    }
+
+    public Label getPathCost() {
+        return pathCost;
+    }
+
+    public Label getDeltaTime() {
+        return deltaTime;
     }
 }
