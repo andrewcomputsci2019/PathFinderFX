@@ -28,7 +28,6 @@ public class DFS implements PathFinderSolver {
                 int x = i - y * width;
                 cellStack.add(new int[]{x, y});
                 predecessorTable[y * width + x] = -1;
-                visited[y * width + x] = true;
             }
         }
         long timeInit = System.nanoTime();
@@ -38,12 +37,10 @@ public class DFS implements PathFinderSolver {
             queue.add(new Message(grid[y * width + x], CellState.Current));
             if (x - 1 > -1 && !visited[y * width + (x - 1)] && !grid[y * width + (x - 1)].getInnerCell().getType().equals(CellType.Wall)) {
                 if (grid[y * width + (x - 1)].getInnerCell().getType().equals(CellType.Target)) {
-                    timeInit = System.nanoTime() - timeInit;
                     return getStatistics(grid, width, passes, predecessorTable, timeInit, x, y);
                 }
                 queue.add(new Message(grid[y * width + (x - 1)], CellState.Expanded));
                 cellStack.add(new int[]{x - 1, y});
-                visited[y*width+(x-1)] = true;
                 predecessorTable[y * width + (x - 1)] = y * width + x;
             }
             if (y + 1 < height && !visited[(y + 1) * width + x] && !grid[(y + 1) * width + x].getInnerCell().getType().equals(CellType.Wall)) {
@@ -60,7 +57,6 @@ public class DFS implements PathFinderSolver {
                 }
                 queue.add(new Message(grid[y * width + (x + 1)], CellState.Expanded));
                 cellStack.add(new int[]{x + 1, y});
-                visited[(y + 1) * width + x] = true;
                 predecessorTable[y * width + (x + 1)] = y * width + x;
             }
             if (y - 1 > -1 && !visited[(y - 1) * width + x] && !grid[(y - 1) * width + x].getInnerCell().getType().equals(CellType.Wall)) {
@@ -69,10 +65,9 @@ public class DFS implements PathFinderSolver {
                 }
                 queue.add(new Message(grid[(y - 1) * width + x], CellState.Expanded));
                 cellStack.add(new int[]{x, y - 1});
-                visited[(y - 1) * width + x] = true;
                 predecessorTable[(y - 1) * width + x] = y * width + x;
             }
-
+            visited[y * width + x] = true;
             queue.add(new Message(grid[y * width + x], CellState.Visited));
             passes++;
         }
@@ -88,6 +83,6 @@ public class DFS implements PathFinderSolver {
             path.add(0, grid[index]);
 
         }
-        return new Statistics(path, passes, timeInit, path.size());
+        return new Statistics(path, passes, System.nanoTime()-timeInit, path.size());
     }
 }
