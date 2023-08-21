@@ -132,6 +132,7 @@ public class SideBar {
         algorithmSelectionWrapper = new HBox(2.5);
         Label algorithmSelectionLabel = new Label("Algorithm:");
         algorithmSelectionLabel.getStyleClass().addAll(Styles.TEXT, Styles.ACCENT);
+        algorithmSelectionLabel.setAlignment(Pos.CENTER_RIGHT);
         algorithmSelectionBox = new ComboBox<>();
         algorithmSelectionBox.getStyleClass().add(Tweaks.ALT_ICON);
         algorithmSelectionBox.setCellFactory(param -> new ListCell<>() {
@@ -148,9 +149,10 @@ public class SideBar {
         algorithmSelectionBox.setItems(FXCollections.observableArrayList(Algorithm.AStar, Algorithm.BFS, Algorithm.BFSGreedy, Algorithm.DFS, Algorithm.WaveFront));
         algorithmSelectionBox.getSelectionModel().selectFirst();
         algorithmSelectionWrapper.getChildren().addAll(algorithmSelectionLabel, algorithmSelectionBox);
-        heuristicSelectionWrapper = new HBox(2.5);
+        heuristicSelectionWrapper = new HBox(5);
         Label heuristicSelectionLabel = new Label("Heuristic: ");
         heuristicSelectionLabel.getStyleClass().addAll(Styles.TEXT, Styles.ACCENT);
+        heuristicSelectionLabel.setAlignment(Pos.CENTER_RIGHT);
         heuristicSelectionBox = new ComboBox<>();
         heuristicSelectionBox.getStyleClass().add(Tweaks.ALT_ICON);
         heuristicSelectionBox.setCellFactory(param -> new ListCell<>() {
