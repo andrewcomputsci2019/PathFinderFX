@@ -113,11 +113,6 @@ public class PathFinderVisualizer {
             CellRectangle rectangle = new CellRectangle();
             cellGrid[i] = rectangle;
             cellGrid[i].setFill(Color.WHITE);
-            cellGrid[i].getInnerCell().stateProperty().addListener((observable, oldValue, newValue) -> {
-                if(newValue == CellState.Visited){
-                    rectangle.setFill(Color.BLACK);
-                }
-            });
             cellGrid[i].setStyle("-fx-stroke-width: .5; -fx-stroke:black;");
         }
     }
