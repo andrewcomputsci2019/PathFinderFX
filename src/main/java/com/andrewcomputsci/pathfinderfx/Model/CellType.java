@@ -1,7 +1,8 @@
 package com.andrewcomputsci.pathfinderfx.Model;
 
 
-
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 /**
  * Represents the different cell type that can exist
@@ -14,19 +15,26 @@ public enum CellType {
     /**
      * Represents a wall, preventing travel across
      */
-    Wall, //black
+    Wall(Color.BLACK), //black
     /**
      * Represents that a cell can be traveled across
      */
-    Traversable, //white
+    Traversable(Color.WHITE), //white
     /**
      * Represents the starting node in the grid
      */
-    Source, //green
+    Source(Color.GREEN), //green
     /**
      * Represents the end goal of the path
      */
-    Target; //blue/teal
+    Target(Color.TEAL); //blue/teal
 
+    private final Paint color;
+    CellType(Paint color){
+        this.color = color;
+    }
+    public Paint getColor(){
+        return color;
+    }
 
 }

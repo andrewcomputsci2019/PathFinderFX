@@ -11,22 +11,16 @@ public class CellRectangle extends Rectangle {
     public CellRectangle() {
         super();
         innerCell = new Cell();
-        innerCell.stateProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Old Value: " + oldValue + " New Value: " + newValue);
-        });
     }
 
     public CellRectangle(double width, double height) {
         super(width, height);
         innerCell = new Cell();
-        innerCell.stateProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Old Value: " + oldValue + " New Value: " + newValue);
-        });
     }
 
     public CellRectangle(double width, double height, Paint fill) {
         super(width, height, fill);
-
+        innerCell = new Cell();
     }
 
     public CellRectangle(double x, double y, double width, double height) {
