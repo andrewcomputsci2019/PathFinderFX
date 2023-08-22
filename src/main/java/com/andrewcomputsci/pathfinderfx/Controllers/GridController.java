@@ -93,9 +93,6 @@ public class GridController {
 
     }
 
-    private void addShutDownListener(){
-
-    }
     private void addContextMenu(){
         grid.getGridNode().setOnMouseClicked(event -> {
             if (event.isControlDown() && event.getButton().equals(MouseButton.SECONDARY)){
@@ -179,11 +176,18 @@ public class GridController {
 
     private void changeCellType(CellRectangle rect) {
         CellType type = sideBar.getTileTypeComboBox().getValue();
+
         if(type.equals(CellType.Target) && targetPlaced){
             return;
         }
         if(type.equals(CellType.Source) && sourcePlaced){
             return;
+        }
+        if(rect.getInnerCell().typeProperty().get().equals(CellType.Source) && !type.equals(CellType.Source)){
+            sourcePlaced = false;
+        }
+        else if(rect.getInnerCell().typeProperty().get().equals(CellType.Target) && !type.equals(CellType.Target)){
+            targetPlaced = false;
         }
         sourcePlaced = type.equals(CellType.Source) || sourcePlaced;
         targetPlaced = type.equals(CellType.Target) || targetPlaced;
@@ -211,7 +215,6 @@ public class GridController {
 
     private void setUpControlMenuButtons(){
             sideBar.getStartButton().setOnAction(event -> {
-
                 if(!algorithmRunning.get() && !animator.getStatus().equals(Animation.Status.RUNNING) && targetPlaced && sourcePlaced){
                     System.out.println("Button Pressed");
                     editableState = false;
@@ -255,18 +258,34 @@ public class GridController {
                     algoExecutor.execute(task);
                 }
             });
+
+            sideBar.getClearButton().setOnAction(event -> {
+                System.out.println("[DEBUG] -- Clear Button Pressed");
+
+                if(editableState){
+                    System.out.println("[DEBUG] -- Clearing Grid");
+                    for(CellRectangle rect: grid.getCellGrid()){
+                        rect.getInnerCell().typeProperty().set(CellType.Traversable);
+                        rect.getInnerCell().stateProperty().set(CellState.Unvisited);
+                    }
+                    targetPlaced = false;
+                    sourcePlaced = false;
+                }
+            });
     }
 
     private void drawPath(List<CellRectangle> path){
         System.out.println("[DEBUG] -- Drawling solution Path");
-        Timeline pathLine = new Timeline(new KeyFrame(Duration.millis(100),(action)->{
+        Timeline pathLine = new Timeline(new KeyFrame(Duration.millis(50),(action)->{
             CellRectangle rect = path.remove(0);
             rect.getInnerCell().stateProperty().set(CellState.Path);
         }));
+        pathLine.rateProperty().bind(animationRateSlider.valueProperty());
         pathLine.setCycleCount(path.size());
         pathLine.setOnFinished((action)->{
             editableState = true;
             System.out.println("[DEBUG] -- Finished Drawling Path");
+            pathLine.rateProperty().unbind();
         });
         pathLine.setAutoReverse(false);
         pathLine.play();
