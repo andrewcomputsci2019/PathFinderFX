@@ -78,7 +78,7 @@ public class BFS implements PathFinderSolver {
         return new Statistics(null, passes, System.nanoTime() - deltaTime, 0);
     }
 
-    private static Statistics getStatistics(CellRectangle[] grid, int width, int[] predecessorTable, int passes, long deltaTime, int x, int y) {
+    protected static Statistics getStatistics(CellRectangle[] grid, int width, int[] predecessorTable, int passes, long deltaTime, int x, int y) {
         long sysTime = System.nanoTime();
         System.out.println("[DEBUG] -- Creating Statistic set");
         List<CellRectangle> path = new ArrayList<>(25);

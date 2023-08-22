@@ -275,6 +275,10 @@ public class GridController {
     }
 
     private void drawPath(List<CellRectangle> path){
+        if(path == null){
+            editableState = true;
+            return;
+        }
         System.out.println("[DEBUG] -- Drawling solution Path");
         Timeline pathLine = new Timeline(new KeyFrame(Duration.millis(50),(action)->{
             CellRectangle rect = path.remove(0);
