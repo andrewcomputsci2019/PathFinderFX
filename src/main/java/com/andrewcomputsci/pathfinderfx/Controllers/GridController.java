@@ -228,7 +228,7 @@ public class GridController {
                     System.out.println("Button Pressed");
                     editableState = false;
                     System.out.println("[DEBUG] -- grabbing path finder");
-                    PathFinderSolver solver = AlgorithmFactory.getPathFinder(sideBar.getAlgorithmSelectionBox().getValue());
+                    PathFinderSolver solver = AlgorithmFactory.getPathFinder(sideBar.getAlgorithmSelectionBox().getValue(),sideBar.getHeuristicSelectionBox().getValue());
                     if(solver == null){
                         editableState = true;
                         System.out.println("[DEBUG] -- Method not supported yet");

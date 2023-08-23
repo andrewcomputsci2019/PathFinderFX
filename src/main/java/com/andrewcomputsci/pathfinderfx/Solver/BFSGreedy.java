@@ -1,24 +1,28 @@
 package com.andrewcomputsci.pathfinderfx.Solver;
 
-import com.andrewcomputsci.pathfinderfx.Model.CellState;
-import com.andrewcomputsci.pathfinderfx.Model.CellType;
-import com.andrewcomputsci.pathfinderfx.Model.Message;
-import com.andrewcomputsci.pathfinderfx.Model.Statistics;
+import com.andrewcomputsci.pathfinderfx.Model.*;
+import com.andrewcomputsci.pathfinderfx.Utils.Heuristics;
 import com.andrewcomputsci.pathfinderfx.view.CellRectangle;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.function.Function;
 
 public class BFSGreedy implements PathFinderSolver{
+    Heuristics.Functor functor;
+
+    public BFSGreedy(Heuristics.Functor functor){
+        this.functor = functor;
+    }
+
     @Override
     public Statistics solve(CellRectangle[] grid, int width, int height, ConcurrentLinkedQueue<Message> queue) {
         //3 length array 0 = x 1 = y 2 = distance to target
         int targetX = 0;
         int targetY = 0;
+        int[] target = new int[]{0,0};
         int passes = 0;
         long deltaTime;
-        PriorityQueue<int[]> searchQueue = new PriorityQueue<>(Comparator.comparing(ints -> ints[2]));
+        PriorityQueue<int[]> searchQueue = new PriorityQueue<>(Comparator.comparing(ints -> functor.compute(ints[0],ints[1], target[0],target[1]) ));
         int[] predecessorTable = new int[grid.length];
         boolean[] visited = new boolean[grid.length];
         Arrays.fill(visited,false);
@@ -36,11 +40,11 @@ public class BFSGreedy implements PathFinderSolver{
             if(grid[i].getInnerCell().typeProperty().get().equals(CellType.Target)){
                 int y = i/width;
                 int x = i%width;
-                targetX = x;
-                targetY = y;
+                target[0] = x;
+                target[1] = y;
             }
         }
-        searchQueue.add(new int[]{startX,startY,getDistance(startX,startY,targetX,targetY)});
+        searchQueue.add(new int[]{startX,startY});
         deltaTime = System.nanoTime();
         while (!searchQueue.isEmpty()){
             int x = searchQueue.peek()[0];
@@ -52,7 +56,7 @@ public class BFSGreedy implements PathFinderSolver{
                     return BFS.getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[(y - 1) * width + x],CellState.Expanded));
-                searchQueue.add(new int[]{x,y-1,getDistance(x,y-1,targetX,targetY)});
+                searchQueue.add(new int[]{x,y-1});
                 visited[(y - 1) * width + x] = true;
                 predecessorTable[(y - 1) * width + x] = y*width+x;
             }
@@ -62,7 +66,7 @@ public class BFSGreedy implements PathFinderSolver{
                     return BFS.getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[y * width + (x + 1)], CellState.Expanded));
-                searchQueue.add(new int[]{x+1,y,getDistance(x+1,y,targetX,targetY)});
+                searchQueue.add(new int[]{x+1,y});
                 predecessorTable[y * width + (x + 1)] = y * width + x;
                 visited[y * width + (x + 1)] = true;
             }
@@ -72,7 +76,7 @@ public class BFSGreedy implements PathFinderSolver{
                     return BFS.getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[(y + 1) * width + x], CellState.Expanded));
-                searchQueue.add(new int[]{x,y+1,getDistance(x,y+1,targetX,targetY)});
+                searchQueue.add(new int[]{x,y+1});
                 predecessorTable[(y + 1) * width + x] = y * width + x;
                 visited[(y + 1) * width + x] = true;
             }
@@ -82,7 +86,7 @@ public class BFSGreedy implements PathFinderSolver{
                     return BFS.getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[y * width + (x - 1)], CellState.Expanded));
-                searchQueue.add(new int[]{x-1,y,getDistance(x-1,y,targetX,targetY)});
+                searchQueue.add(new int[]{x-1,y});
                 predecessorTable[y * width + (x - 1)] = y * width + x;
                 visited[y * width + (x - 1)] = true;
             }
@@ -92,8 +96,4 @@ public class BFSGreedy implements PathFinderSolver{
         return new Statistics(null,passes,deltaTime,0);
     }
 
-
-    public static int getDistance(int x1, int y1, int x2, int y2){
-        return Math.abs(x1-x2) + Math.abs(y1-y2);
-    }
 }

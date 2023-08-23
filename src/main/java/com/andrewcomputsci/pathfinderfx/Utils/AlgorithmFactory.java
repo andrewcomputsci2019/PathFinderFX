@@ -1,12 +1,13 @@
 package com.andrewcomputsci.pathfinderfx.Utils;
 
 import com.andrewcomputsci.pathfinderfx.Model.Algorithm;
+import com.andrewcomputsci.pathfinderfx.Model.Heuristic;
 import com.andrewcomputsci.pathfinderfx.Solver.*;
 
 public class AlgorithmFactory {
 
 
-    public static PathFinderSolver getPathFinder(Algorithm algorithm){
+    public static PathFinderSolver getPathFinder(Algorithm algorithm, Heuristic heuristic){
         switch (algorithm){
             case BFS -> {
                 return new BFS();
@@ -15,7 +16,7 @@ public class AlgorithmFactory {
                 return new DFS();
             }
             case BFSGreedy -> {
-                return new BFSGreedy();
+                return new BFSGreedy(Heuristics.getFunctor(heuristic));
             }
             case AStar -> {
                 return new AStar();

@@ -169,7 +169,7 @@ public class SideBar {
         heuristicSelectionBox.setItems(FXCollections.observableArrayList(Heuristic.Chebyshev, Heuristic.Euclidean, Heuristic.Manhattan));
         heuristicSelectionBox.getSelectionModel().selectFirst();
         algorithmSelectionBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            heuristicSelectionBox.setDisable(!newValue.equals(Algorithm.AStar));
+            heuristicSelectionBox.setDisable(!newValue.equals(Algorithm.AStar) && !newValue.equals(Algorithm.BFSGreedy));
         });
         heuristicSelectionBox.setPrefWidth(125.0);
         algorithmSelectionBox.setPrefWidth(125.0);
