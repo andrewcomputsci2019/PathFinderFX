@@ -27,7 +27,6 @@ import javafx.util.Duration;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -49,7 +48,7 @@ public class GridController {
     private boolean sourcePlaced;
 
 
-    private Timeline animator;
+    private Timeline algorithmAnimator;
     private Statistics lastSet;
 
     private SimpleBooleanProperty algorithmRunning;
@@ -195,27 +194,37 @@ public class GridController {
     }
 
     private void initTimeLine(){
-        animator = new Timeline();
-        animator.rateProperty().bind(animationRateSlider.valueProperty());
-        animator.statusProperty().addListener((observable, oldValue, newValue) -> {
+        algorithmAnimator = new Timeline();
+        algorithmAnimator.rateProperty().bind(animationRateSlider.valueProperty());
+        algorithmAnimator.statusProperty().addListener((observable, oldValue, newValue) -> {
             //add code here for when the animator stops or pauses
             //two conditions either user skipped the animation or the animation finished
             //if passed it was skipped
             //if stopped animation ran its course
-            if(newValue.equals(Animation.Status.STOPPED) && !algorithmRunning.get()){
+            if(newValue.equals(Animation.Status.PAUSED)){
+                while (algorithmRunning.get() || !threadPipe.isEmpty()){
+                    Message message = threadPipe.poll();
+                    if(message==null){
+                        continue;
+                    }
+                    message.getCellToBeChanged().getInnerCell().stateProperty().set(message.getNewType());
+                }
+                drawPath(lastSet.path());
+            }
+            else if(newValue.equals(Animation.Status.STOPPED) && !algorithmRunning.get()){
                 drawPath(lastSet.path());
             }
 
         });
-        animator.getKeyFrames().setAll(new KeyFrame(Duration.millis(50),(action)->{
+        algorithmAnimator.getKeyFrames().setAll(new KeyFrame(Duration.millis(50),(action)->{
             System.out.println("Playing keyframe");
         }));
-        animator.setCycleCount(Animation.INDEFINITE);
+        algorithmAnimator.setCycleCount(Animation.INDEFINITE);
     }
 
     private void setUpControlMenuButtons(){
             sideBar.getStartButton().setOnAction(event -> {
-                if(!algorithmRunning.get() && !animator.getStatus().equals(Animation.Status.RUNNING) && targetPlaced && sourcePlaced){
+                if(!algorithmRunning.get() && !algorithmAnimator.getStatus().equals(Animation.Status.RUNNING) && targetPlaced && sourcePlaced){
                     System.out.println("Button Pressed");
                     editableState = false;
                     System.out.println("[DEBUG] -- grabbing path finder");
@@ -236,7 +245,7 @@ public class GridController {
                         algorithmRunning.set(true);
                     });
                     task.setOnRunning(workerEvent ->{
-                        animator.play();
+                        algorithmAnimator.play();
                     });
                     task.setOnSucceeded(workerEvent ->{
                         System.out.println("[DEBUG] -- Algorithm Finished");
@@ -244,7 +253,7 @@ public class GridController {
                         lastSet = task.getValue();
                         fillStatPage();
                     });
-                    animator.getKeyFrames().setAll(new KeyFrame(Duration.millis(1000/60.0), actionEvent ->{
+                    algorithmAnimator.getKeyFrames().setAll(new KeyFrame(Duration.millis(1000/60.0), actionEvent ->{
                         if(algorithmRunning.get() || !threadPipe.isEmpty()){
                             if(threadPipe.isEmpty()){
                                 return;
@@ -252,7 +261,7 @@ public class GridController {
                             Message message = threadPipe.poll();
                             message.getCellToBeChanged().getInnerCell().stateProperty().set(message.getNewType());
                         }else{
-                            animator.stop();
+                            algorithmAnimator.stop();
                         }
                     }));
                     algoExecutor.execute(task);
@@ -270,6 +279,12 @@ public class GridController {
                     }
                     targetPlaced = false;
                     sourcePlaced = false;
+                }
+            });
+
+            sideBar.getExitButton().setOnAction(event -> {
+                if(!editableState && algorithmAnimator.getStatus().equals(Animation.Status.RUNNING)){
+                    algorithmAnimator.pause();
                 }
             });
     }
