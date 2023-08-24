@@ -9,6 +9,7 @@ import com.andrewcomputsci.pathfinderfx.Model.Message;
 import com.andrewcomputsci.pathfinderfx.Model.Statistics;
 import com.andrewcomputsci.pathfinderfx.Solver.PathFinderSolver;
 import com.andrewcomputsci.pathfinderfx.Utils.AlgorithmFactory;
+import com.andrewcomputsci.pathfinderfx.Utils.Validators;
 import com.andrewcomputsci.pathfinderfx.view.CellRectangle;
 import com.andrewcomputsci.pathfinderfx.view.PathFinderVisualizer;
 import com.andrewcomputsci.pathfinderfx.view.SideBar;
@@ -23,9 +24,11 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.*;
 import javafx.util.Duration;
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -89,7 +92,7 @@ public class GridController {
             initCellControls();
             initTimeLine();
             setUpControlMenuButtons();
-
+            initGridGenButtons();
     }
 
     private void addContextMenu(){
@@ -115,7 +118,11 @@ public class GridController {
 
         for(CellRectangle rect : grid.getCellGrid()){
             rect.getInnerCell().typeProperty().addListener((observable, oldValue, newValue) -> {
-                rect.setFill(newValue.getColor());
+                if( newValue.equals(CellType.Traversable) && rect.getInnerCell().weightProperty().get() != 0.0){
+                    rect.setFill(colorInterpolate(rect.getInnerCell().weightProperty().get()));
+                }else {
+                    rect.setFill(newValue.getColor());
+                }
             });
             rect.getInnerCell().stateProperty().addListener((observable, oldValue, newValue) -> {
                 if(newValue.equals(CellState.Unvisited)){
@@ -124,7 +131,24 @@ public class GridController {
                     rect.setFill(newValue.getColor());
                 }
             });
+            rect.getInnerCell().weightProperty().addListener((observable, oldValue, newValue) -> {
+                //the weight will be between 0 and 1, so we just create a linear gradient between two colors
+                // using the weight as the present cut-off
+                //100% = 16 luminance, 0% = 100% luminance
+                // x = 1, y = 16 // x = 0  y = 100
+                // y = mx+b
+                // y = 100 (0)(m)
+                // y = 100 + (m)(1) = 16  -> m = -84
+                if(newValue.doubleValue() != 0.0) rect.setFill(colorInterpolate(newValue.doubleValue()));
+                else{
+                    rect.setFill(rect.getInnerCell().getType().getColor());
+                }
+            });
         }
+    }
+    private static Color colorInterpolate(double weight){
+        double value = (100 + weight*-75);
+        return Color.hsb(195,51/100.0,value/100.0);
     }
 
     private void initCellControls(){
@@ -276,6 +300,7 @@ public class GridController {
                     for(CellRectangle rect: grid.getCellGrid()){
                         rect.getInnerCell().typeProperty().set(CellType.Traversable);
                         rect.getInnerCell().stateProperty().set(CellState.Unvisited);
+                        rect.getInnerCell().weightProperty().set(0.0);
                     }
                     targetPlaced = false;
                     sourcePlaced = false;
@@ -314,8 +339,20 @@ public class GridController {
         System.out.println("[DEBUG] -- LAST SET: " + lastSet);
         sideBar.getDeltaTime().setText(String.format("%3.6fms",lastSet.deltaTime()/(1E6)));
         sideBar.getPathFound().setText(lastSet.path()!=null?"True":"False");
-        sideBar.getPathCost().setText(String.format("%d",lastSet.pathCost()));
+        sideBar.getPathCost().setText(String.format("%.2f",lastSet.pathCost()));
         sideBar.getIterations().setText(String.valueOf(lastSet.passes()));
+    }
+
+    private void initGridGenButtons(){
+        sideBar.getAddRandomWeights().setOnAction(event -> {
+            Random random = new Random();
+            if(editableState){
+                for(CellRectangle rect: grid.getCellGrid()){
+                    rect.getInnerCell().weightProperty().set(random.nextDouble(0.05,1.00));
+                    System.out.println("[DEBUG] -- rect weight: " + rect.getInnerCell().getWeight());
+                }
+            }
+        });
     }
 
 }

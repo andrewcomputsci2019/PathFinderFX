@@ -5,5 +5,6 @@ public enum Algorithm {
     BFS,
     DFS,
     WaveFront,
-    BFSGreedy
+    BFSGreedy,
+    Dijkstra
 }

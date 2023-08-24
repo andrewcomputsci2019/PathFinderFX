@@ -21,6 +21,7 @@ public class AlgorithmFactory {
             case AStar -> {
                 return new AStar();
             }
+            case Dijkstra -> {return new Dijkstra();}
             default -> {
                 return null;
             }

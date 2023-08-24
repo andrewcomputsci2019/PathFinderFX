@@ -1,11 +1,12 @@
 package com.andrewcomputsci.pathfinderfx.Model;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class Cell {
     private static final int DEFAULT_WEIGHT = 0;
-    private final SimpleIntegerProperty weight;
+    private final SimpleDoubleProperty weight;
     private SimpleObjectProperty<CellState> state;
     private SimpleObjectProperty<CellType> type;
 
@@ -13,8 +14,8 @@ public class Cell {
         this(DEFAULT_WEIGHT, CellType.Traversable, CellState.Unvisited);
     }
 
-    private Cell(int weight, CellType cellType, CellState state) {
-        this.weight = new SimpleIntegerProperty(weight);
+    private Cell(double weight, CellType cellType, CellState state) {
+        this.weight = new SimpleDoubleProperty(weight);
         setType(cellType);
         setState(state);
     }
@@ -35,7 +36,7 @@ public class Cell {
         this.type = new SimpleObjectProperty<>(type);
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight.get();
     }
 
@@ -51,7 +52,7 @@ public class Cell {
         this.type.set(type);
     }
 
-    public SimpleIntegerProperty weightProperty() {
+    public SimpleDoubleProperty weightProperty() {
         return weight;
     }
 

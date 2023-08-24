@@ -146,7 +146,7 @@ public class SideBar {
                 }
             }
         });
-        algorithmSelectionBox.setItems(FXCollections.observableArrayList(Algorithm.AStar, Algorithm.BFS, Algorithm.BFSGreedy, Algorithm.DFS, Algorithm.WaveFront));
+        algorithmSelectionBox.setItems(FXCollections.observableArrayList(Algorithm.AStar, Algorithm.BFS, Algorithm.BFSGreedy, Algorithm.DFS,Algorithm.Dijkstra, Algorithm.WaveFront));
         algorithmSelectionBox.getSelectionModel().selectFirst();
         algorithmSelectionWrapper.getChildren().addAll(algorithmSelectionLabel, algorithmSelectionBox);
         heuristicSelectionWrapper = new HBox(5);
