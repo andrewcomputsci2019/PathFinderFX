@@ -8,21 +8,19 @@ import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BFSGreedy implements PathFinderSolver{
-    Heuristics.Functor functor;
+    Heuristics.Functor heuristic;
 
     public BFSGreedy(Heuristics.Functor functor){
-        this.functor = functor;
+        this.heuristic = functor;
     }
 
     @Override
     public Statistics solve(CellRectangle[] grid, int width, int height, ConcurrentLinkedQueue<Message> queue) {
         //3 length array 0 = x 1 = y 2 = distance to target
-        int targetX = 0;
-        int targetY = 0;
         int[] target = new int[]{0,0};
         int passes = 0;
         long deltaTime;
-        PriorityQueue<int[]> searchQueue = new PriorityQueue<>(Comparator.comparing(ints -> functor.compute(ints[0],ints[1], target[0],target[1]) ));
+        PriorityQueue<int[]> searchQueue = new PriorityQueue<>(Comparator.comparing(ints -> heuristic.compute(ints[0],ints[1], target[0],target[1]) ));
         int[] predecessorTable = new int[grid.length];
         boolean[] visited = new boolean[grid.length];
         Arrays.fill(visited,false);

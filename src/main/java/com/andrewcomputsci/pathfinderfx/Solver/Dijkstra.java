@@ -14,17 +14,14 @@ public class Dijkstra implements PathFinderSolver{
         boolean[] visited = new boolean[grid.length];
         double[] occurredCost = new double[grid.length];
         int[] predecessorTable = new int[grid.length];
-        PriorityQueue<int[]> searchQueue = new PriorityQueue<>(Comparator.comparing(ints -> {
-            return occurredCost[ints[0]+ints[1]*width];
-        }));
+        PriorityQueue<int[]> searchQueue = new PriorityQueue<>(Comparator.comparing(ints -> occurredCost[ints[3]*width+ints[2]] + grid[ints[1]*width+ints[0]].getInnerCell().getWeight()));
         Arrays.fill(visited,false);
-
         for(int i = 0; i < grid.length; i++){
             if(grid[i].getInnerCell().typeProperty().get().equals(CellType.Source)){
                 occurredCost[i] = grid[i].getInnerCell().weightProperty().get();
                 int y = i/width;
                 int x = i-y*width;
-                searchQueue.add(new int[]{x,y,width-1,-1});
+                searchQueue.add(new int[]{x,y,x,y});
                 break;
             }
         }
@@ -35,6 +32,9 @@ public class Dijkstra implements PathFinderSolver{
             int predX = searchQueue.peek()[2];
             int predY = searchQueue.poll()[3];
             if(visited[y*width+x])continue;
+            if(predY*width+predX != x*width+y){
+                occurredCost[y*width+x] = occurredCost[predY*width+predX] + grid[y*width+x].getInnerCell().getWeight();
+            }
             visited[y*width+x] = true;
             predecessorTable[y*width+x] = predY*width+predX;
             queue.add(new Message(grid[y*width+x],CellState.Current));
@@ -43,9 +43,7 @@ public class Dijkstra implements PathFinderSolver{
                     deltaTime = System.nanoTime() - deltaTime;
                     return getStatistics(grid,width,predecessorTable,passes,deltaTime,x,y,occurredCost[y*width+x]+grid[(y-1)*width+x].getInnerCell().weightProperty().get());
                 }
-
                 queue.add(new Message(grid[(y-1)*width+x], CellState.Expanded));
-                occurredCost[(y-1)*width+x] = occurredCost[y*width+x]+grid[(y-1)*width+x].getInnerCell().weightProperty().get();
                 searchQueue.add(new int[]{x,(y-1),x,y});
             }
             if((x+1) < width && !visited[y*width+(x+1)] && !grid[y*width+(x+1)].getInnerCell().typeProperty().get().equals(CellType.Wall)){
@@ -55,7 +53,6 @@ public class Dijkstra implements PathFinderSolver{
                 }
 
                 queue.add(new Message(grid[y*width+(x+1)],CellState.Expanded));
-                occurredCost[y*width+(x+1)] = occurredCost[y*width+x]+grid[y*width+(x+1)].getInnerCell().weightProperty().get();
                 searchQueue.add(new int[]{x+1,y,x,y});
             }
             if((y+1) < height &&  !visited[(y+1)*width+x] && !grid[(y+1)*width+x].getInnerCell().typeProperty().get().equals(CellType.Wall)){
@@ -64,7 +61,6 @@ public class Dijkstra implements PathFinderSolver{
                     return getStatistics(grid,width,predecessorTable,passes,deltaTime,x,y,occurredCost[y*width+x]+grid[(y+1)*width+x].getInnerCell().weightProperty().get());
                 }
                 queue.add(new Message(grid[(y+1)*width+x], CellState.Expanded));
-                occurredCost[(y+1)*width+x] = occurredCost[y*width+x] + grid[(y+1)*width+x].getInnerCell().weightProperty().get();
                 searchQueue.add(new int[]{x,y+1,x,y});
             }
             if((x-1) > -1 && !visited[y*width+(x-1)] && !grid[y*width+(x-1)].getInnerCell().typeProperty().get().equals(CellType.Wall)){
@@ -73,7 +69,6 @@ public class Dijkstra implements PathFinderSolver{
                     return getStatistics(grid,width,predecessorTable,passes,deltaTime,x,y,occurredCost[y*width+x]+grid[y*width+(x-1)].getInnerCell().weightProperty().get());
                 }
                 queue.add(new Message(grid[y*width + (x-1)],CellState.Expanded));
-                occurredCost[y*width+(x-1)] = occurredCost[y*width+x] + grid[y*width+(x-1)].getInnerCell().weightProperty().get();
                 searchQueue.add(new int[]{(x-1),y,x,y});
             }
             queue.add(new Message(grid[y*width+x],CellState.Visited));
@@ -88,7 +83,7 @@ public class Dijkstra implements PathFinderSolver{
         List<CellRectangle> path = new ArrayList<>();
         int index = y*width+x;
         path.add(0,grid[index]);
-        while (predecessorTable[index]!=-1){
+        while (predecessorTable[index]!=index){
             index = predecessorTable[index];
             path.add(0,grid[index]);
         }
