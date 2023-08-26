@@ -24,6 +24,9 @@ public class AlgorithmFactory {
                 return new AStar(Heuristics.getFunctor(heuristic));
             }
             case Dijkstra -> {return new Dijkstra();}
+            case WaveFront -> {
+                return new WaveFront();
+            }
             default -> {
                 return null;
             }
