@@ -1,6 +1,7 @@
 package com.andrewcomputsci.pathfinderfx.Utils;
 
 import com.andrewcomputsci.pathfinderfx.Generators.BinaryTree;
+import com.andrewcomputsci.pathfinderfx.Generators.DFSRandom;
 import com.andrewcomputsci.pathfinderfx.Generators.MazeGenerator;
 import com.andrewcomputsci.pathfinderfx.Model.Algorithm;
 import com.andrewcomputsci.pathfinderfx.Model.Heuristic;
@@ -40,6 +41,9 @@ public class AlgorithmFactory {
         switch (mazeType){
             case BinaryTree -> {
                 return new BinaryTree();
+            }
+            case DFSRandom -> {
+                return new DFSRandom();
             }
             default -> {
                 return null;
