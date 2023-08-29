@@ -3,12 +3,14 @@ package com.andrewcomputsci.pathfinderfx.Controllers;
 import atlantafx.base.controls.ProgressSliderSkin;
 import atlantafx.base.controls.ToggleSwitch;
 import atlantafx.base.theme.Styles;
+import com.andrewcomputsci.pathfinderfx.Generators.MazeGenerator;
 import com.andrewcomputsci.pathfinderfx.Model.CellState;
 import com.andrewcomputsci.pathfinderfx.Model.CellType;
 import com.andrewcomputsci.pathfinderfx.Model.Message;
 import com.andrewcomputsci.pathfinderfx.Model.Statistics;
 import com.andrewcomputsci.pathfinderfx.Solver.PathFinderSolver;
 import com.andrewcomputsci.pathfinderfx.Utils.AlgorithmFactory;
+import com.andrewcomputsci.pathfinderfx.Utils.MazeUtils;
 import com.andrewcomputsci.pathfinderfx.Utils.Validators;
 import com.andrewcomputsci.pathfinderfx.view.CellRectangle;
 import com.andrewcomputsci.pathfinderfx.view.PathFinderVisualizer;
@@ -93,6 +95,7 @@ public class GridController {
             initTimeLine();
             setUpControlMenuButtons();
             initGridGenButtons();
+            initMazeButtons();
     }
 
     private void addContextMenu(){
@@ -139,7 +142,7 @@ public class GridController {
                 // y = mx+b
                 // y = 100 (0)(m)
                 // y = 100 + (m)(1) = 16  -> m = -84
-                if(newValue.doubleValue() != 0.0) rect.setFill(colorInterpolate(newValue.doubleValue()));
+                if(newValue.doubleValue() != 0.0 || !rect.getInnerCell().typeProperty().get().equals(CellType.Traversable)) rect.setFill(colorInterpolate(newValue.doubleValue()));
                 else{
                     rect.setFill(rect.getInnerCell().getType().getColor());
                 }
@@ -355,5 +358,52 @@ public class GridController {
         });
     }
 
+    private void initMazeButtons(){
+        sideBar.getMazeGenButton().setOnAction(event -> {
+            System.out.println("Button Pressed");
+            if(editableState) {
+                editableState = false;
+                MazeGenerator gen = AlgorithmFactory.getMazeGenerator(sideBar.getMazeTypeComboBox().getValue());
+                MazeUtils.initMaze(grid.getCellGrid());
+                ConcurrentLinkedQueue<Message> queue = new ConcurrentLinkedQueue<>();
+                Task<Object> task = new Task<>() {
+                    @Override
+                    protected Object call() throws Exception {
+                        gen.generateMaze(grid.getCellGrid(),grid.getWidth(),grid.getHeight(),queue);
+                        return null;
+                    }
+                };
+                Timeline line = new Timeline();
+                 line.getKeyFrames().setAll(new KeyFrame(Duration.millis(10),action -> {
+                     if (!queue.isEmpty()){
+                         System.out.println("timeline running");
+                         Message message = queue.poll();
+                         CellRectangle changed = message.getCellToBeChanged();
+                         if(message.getCellType() != null){
+                             changed.getInnerCell().typeProperty().set(message.getCellType());
+                         }else{
+                             changed.getInnerCell().stateProperty().set(message.getNewType());
+                         }
+                     }
+                     else{
+                        line.stop();
+                     }
+                 }));
+                line.setAutoReverse(false);
+                line.setCycleCount(Animation.INDEFINITE);
+                task.setOnRunning(event1 -> {
+                    line.playFromStart();
+                });
+                task.setOnSucceeded(event1 -> {
+                    editableState = true;
+                });
+                task.setOnFailed(event1 -> {
+                    System.out.println("failed thing: ");
+                    editableState = true;
+                });
+                algoExecutor.execute(task);
+            }
+        });
+    }
 }
 

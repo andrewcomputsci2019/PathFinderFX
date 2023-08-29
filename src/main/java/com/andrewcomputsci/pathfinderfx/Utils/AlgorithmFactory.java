@@ -1,7 +1,10 @@
 package com.andrewcomputsci.pathfinderfx.Utils;
 
+import com.andrewcomputsci.pathfinderfx.Generators.BinaryTree;
+import com.andrewcomputsci.pathfinderfx.Generators.MazeGenerator;
 import com.andrewcomputsci.pathfinderfx.Model.Algorithm;
 import com.andrewcomputsci.pathfinderfx.Model.Heuristic;
+import com.andrewcomputsci.pathfinderfx.Model.MazeType;
 import com.andrewcomputsci.pathfinderfx.Solver.*;
 
 import java.util.Optional;
@@ -26,6 +29,17 @@ public class AlgorithmFactory {
             case Dijkstra -> {return new Dijkstra();}
             case WaveFront -> {
                 return new WaveFront();
+            }
+            default -> {
+                return null;
+            }
+        }
+    }
+
+    public static MazeGenerator getMazeGenerator(MazeType mazeType){
+        switch (mazeType){
+            case BinaryTree -> {
+                return new BinaryTree();
             }
             default -> {
                 return null;
