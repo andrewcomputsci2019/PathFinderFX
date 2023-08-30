@@ -1,9 +1,6 @@
 package com.andrewcomputsci.pathfinderfx.Utils;
 
-import com.andrewcomputsci.pathfinderfx.Generators.BinaryTree;
-import com.andrewcomputsci.pathfinderfx.Generators.DFSRandom;
-import com.andrewcomputsci.pathfinderfx.Generators.MazeGenerator;
-import com.andrewcomputsci.pathfinderfx.Generators.PrimsRandom;
+import com.andrewcomputsci.pathfinderfx.Generators.*;
 import com.andrewcomputsci.pathfinderfx.Model.Algorithm;
 import com.andrewcomputsci.pathfinderfx.Model.Heuristic;
 import com.andrewcomputsci.pathfinderfx.Model.MazeType;
@@ -48,6 +45,9 @@ public class AlgorithmFactory {
             }
             case Prims -> {
                 return new PrimsRandom();
+            }
+            case Kruskal -> {
+                return new Kruskal();
             }
             default -> {
                 return null;
