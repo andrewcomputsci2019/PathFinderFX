@@ -3,7 +3,6 @@ package com.andrewcomputsci.pathfinderfx.Generators;
 import com.andrewcomputsci.pathfinderfx.Model.CellState;
 import com.andrewcomputsci.pathfinderfx.Model.CellType;
 import com.andrewcomputsci.pathfinderfx.Model.Message;
-import com.andrewcomputsci.pathfinderfx.Utils.MazeUtils;
 import com.andrewcomputsci.pathfinderfx.view.CellRectangle;
 
 import java.util.*;
