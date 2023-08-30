@@ -13,34 +13,36 @@ public class Kruskal implements MazeGenerator{
     private CellRectangle[] grid;
     private ConcurrentLinkedQueue<Message> messages;
     @Override
+    @SuppressWarnings("unchecked")
     public void generateMaze(CellRectangle[] grid, int width, int height, ConcurrentLinkedQueue<Message> messageQueue) {
         this.grid = grid;
         this.height = height;
         this.width = width;
         this.messages = messageQueue;
         Random random = new Random();
-        HashMap<Integer, Set<Integer>> setHashMap = new HashMap<>(); //each cell gets added to a set and we can track
+        Set<Integer>[] setTable = new Set[grid.length];
+        //each cell gets added to a set and we can track
         ArrayList<int[]> edgeList = new ArrayList<>();
         for(int y = 0; y < height; y++){
             if(y%2 !=0) continue;
             for(int x = 0; x < width; x++){
                 HashSet<Integer> set = new HashSet<>();
                 set.add(y*width+x);
-                setHashMap.put(y*width+x,set);
+                setTable[y*width+x] = set;
                 if(x%2!=0)continue;
                 edgeList.addAll(getEdgesFromCell(x,y));
             }
         }
         while (edgeList.size()!=0){
             int[] randomEdge = edgeList.remove(random.nextInt(0,edgeList.size()));
-            if(setHashMap.get(randomEdge[0]+randomEdge[1]*width).contains(randomEdge[2]+randomEdge[3]*width)){
+            if(setTable[(randomEdge[0]+randomEdge[1]*width)].contains(randomEdge[2]+randomEdge[3]*width)){
                 continue;
             };
-            Set<Integer> sharedSet1 = setHashMap.get(randomEdge[0]+randomEdge[1]*width);
-            Set<Integer> sharedSet2 = setHashMap.get(randomEdge[2]+randomEdge[3]*width);
+            Set<Integer> sharedSet1 = setTable[(randomEdge[0]+randomEdge[1]*width)];
+            Set<Integer> sharedSet2 = setTable[(randomEdge[2]+randomEdge[3]*width)];
             sharedSet1.add(joinCells(randomEdge[0],randomEdge[1],randomEdge[2],randomEdge[3]));
             sharedSet1.addAll(sharedSet2);
-            sharedSet2.forEach(item->setHashMap.put(item,sharedSet1));
+            sharedSet2.forEach(item->setTable[item] = sharedSet1);
             messages.add(new Message(grid[randomEdge[1]*width+randomEdge[0]],CellType.Traversable));
             messages.add(new Message(grid[randomEdge[3]*width+randomEdge[2]],CellType.Traversable));
         }
