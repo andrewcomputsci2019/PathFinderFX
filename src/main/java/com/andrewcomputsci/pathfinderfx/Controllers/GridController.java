@@ -10,7 +10,7 @@ import com.andrewcomputsci.pathfinderfx.Model.Message;
 import com.andrewcomputsci.pathfinderfx.Model.Statistics;
 import com.andrewcomputsci.pathfinderfx.Solver.PathFinderSolver;
 import com.andrewcomputsci.pathfinderfx.Utils.AlgorithmFactory;
-import com.andrewcomputsci.pathfinderfx.Utils.MazeUtils;
+import com.andrewcomputsci.pathfinderfx.Utils.GridUtils;
 import com.andrewcomputsci.pathfinderfx.view.CellRectangle;
 import com.andrewcomputsci.pathfinderfx.view.PathFinderVisualizer;
 import com.andrewcomputsci.pathfinderfx.view.SideBar;
@@ -19,14 +19,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.CustomMenuItem;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import org.controlsfx.validation.ValidationResult;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
 
 import java.util.List;
 import java.util.Random;
@@ -43,8 +43,6 @@ public class GridController {
 
     private Slider animationRateSlider;
 
-    private Timeline timeline;
-
     private boolean editableState;
 
     private boolean targetPlaced;
@@ -59,6 +57,7 @@ public class GridController {
 
     private ConcurrentLinkedQueue<Message> threadPipe;
     public static final ExecutorService algoExecutor = Executors.newSingleThreadExecutor(); //needs to be closed/stopped when application ends
+
 
     //should use timeline to added ability to animate at a fixed interval
     public GridController(PathFinderVisualizer visualizer, SideBar sideBar){
@@ -83,11 +82,18 @@ public class GridController {
             animationRateSlider.setMajorTickUnit(1);
             animationRateSlider.setTooltip(new Tooltip("Controls the rate of the Animation by default 1 - normal, 0 - paused, and 2 - double the normal"));
             exactMode.bind(toggleSwitch.selectedProperty());
+            Button gcButton = new Button("GC");
+            gcButton.setOnAction(event -> {
+                System.gc();
+            });
+            gcButton.getStyleClass().add(Styles.ACCENT);
             CustomMenuItem animationItem = new CustomMenuItem(animationRateSlider);
             CustomMenuItem item = new CustomMenuItem(toggleSwitch);
+            CustomMenuItem gcMenu = new CustomMenuItem(gcButton);
+            gcMenu.setHideOnClick(false);
             item.setHideOnClick(false);
             animationItem.setHideOnClick(false);
-            settingMenu = new ContextMenu(item,animationItem);
+            settingMenu = new ContextMenu(item,animationItem,gcMenu);
             addContextMenu();
             addCellTypeListeners();
             initCellControls();
@@ -95,6 +101,7 @@ public class GridController {
             setUpControlMenuButtons();
             initGridGenButtons();
             initMazeButtons();
+            initChangeGridButton();
     }
 
     private void addContextMenu(){
@@ -251,7 +258,7 @@ public class GridController {
     private void setUpControlMenuButtons(){
             sideBar.getStartButton().setOnAction(event -> {
                 if(!algorithmRunning.get() && !algorithmAnimator.getStatus().equals(Animation.Status.RUNNING) && targetPlaced && sourcePlaced){
-                    System.out.println("Button Pressed");
+                    GridUtils.initPathFind(grid.getCellGrid());
                     editableState = false;
                     System.out.println("[DEBUG] -- grabbing path finder");
                     PathFinderSolver solver = AlgorithmFactory.getPathFinder(sideBar.getAlgorithmSelectionBox().getValue(),sideBar.getHeuristicSelectionBox().getValue(),exactMode.get());
@@ -363,7 +370,7 @@ public class GridController {
             if(editableState) {
                 editableState = false;
                 MazeGenerator gen = AlgorithmFactory.getMazeGenerator(sideBar.getMazeTypeComboBox().getValue());
-                MazeUtils.initMaze(grid.getCellGrid());
+                GridUtils.initMaze(grid.getCellGrid());
                 ConcurrentLinkedQueue<Message> queue = new ConcurrentLinkedQueue<>();
                 Task<Object> task = new Task<>() {
                     @Override
@@ -400,6 +407,27 @@ public class GridController {
                 });
                 algoExecutor.execute(task);
             }
+        });
+    }
+
+    private void initChangeGridButton(){
+        ValidationSupport validationSupport = new ValidationSupport();
+        Validator<String> validator = (control, s) -> {
+            boolean condition = false;
+            if(s == null) return ValidationResult.fromError(control,"Null value");
+            condition = s.matches("^[0-9]+,[0-9]+$");
+            return ValidationResult.fromErrorIf(control,"Bad string provided",!condition);
+        };
+        validationSupport.registerValidator(sideBar.getGridSizeTextField(),validator);
+        sideBar.getChangeGridSizeButton().setOnAction(event -> {
+            if(validationSupport.isInvalid()){
+                System.out.println("[DEBUG] -- invalid string provided");
+                return;
+            }
+            String[] nums = sideBar.getGridSizeTextField().getText().split(",");
+            grid.changeGridDimension(Integer.parseInt(nums[0]),Integer.parseInt(nums[1]));
+            addCellTypeListeners();
+            initCellControls();
         });
     }
 }
