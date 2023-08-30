@@ -11,7 +11,6 @@ import com.andrewcomputsci.pathfinderfx.Model.Statistics;
 import com.andrewcomputsci.pathfinderfx.Solver.PathFinderSolver;
 import com.andrewcomputsci.pathfinderfx.Utils.AlgorithmFactory;
 import com.andrewcomputsci.pathfinderfx.Utils.MazeUtils;
-import com.andrewcomputsci.pathfinderfx.Utils.Validators;
 import com.andrewcomputsci.pathfinderfx.view.CellRectangle;
 import com.andrewcomputsci.pathfinderfx.view.PathFinderVisualizer;
 import com.andrewcomputsci.pathfinderfx.view.SideBar;
@@ -26,7 +25,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.List;
@@ -376,7 +375,6 @@ public class GridController {
                 Timeline line = new Timeline();
                  line.getKeyFrames().setAll(new KeyFrame(Duration.millis(10),action -> {
                      if (!queue.isEmpty()){
-                         System.out.println("timeline running");
                          Message message = queue.poll();
                          CellRectangle changed = message.getCellToBeChanged();
                          if(message.getCellType() != null){
@@ -398,7 +396,6 @@ public class GridController {
                     editableState = true;
                 });
                 task.setOnFailed(event1 -> {
-                    System.out.println("failed thing: ");
                     editableState = true;
                 });
                 algoExecutor.execute(task);

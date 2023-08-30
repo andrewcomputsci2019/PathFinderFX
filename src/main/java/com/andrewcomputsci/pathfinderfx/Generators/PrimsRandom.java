@@ -23,8 +23,10 @@ public class PrimsRandom implements MazeGenerator{
         this.height = height;
         visited = new boolean[grid.length];
         frontierCell = new boolean[grid.length];
+
         Arrays.fill(frontierCell,false);
         Arrays.fill(visited,false);
+
         Random random = new Random();
         int startX = random.nextInt(0,width);
         int startY = random.nextInt(0,height);
@@ -33,6 +35,7 @@ public class PrimsRandom implements MazeGenerator{
         visited[startY*width+startX] = true;
         messages.add(new Message(grid[startY*width+startX],CellType.Traversable));
         List<int[]> cells;
+        System.out.println("[DEBUG] -- Started Prims algorithm");
         while (frontierCells.size() != 0){
             int[] randCell = frontierCells.remove(random.nextInt(0, frontierCells.size()));
             cells = getVisitedAdjacentCells(randCell[0],randCell[1]);
@@ -42,6 +45,7 @@ public class PrimsRandom implements MazeGenerator{
             messages.add(new Message(grid[randCell[1]*width+randCell[0]],CellType.Traversable));
             frontierCells.addAll(getFrontierCells(randCell[0],randCell[1]));
         }
+        System.out.println("[DEBUG] -- Ended Prims algorithm");
     }
 
     private void joinCell(int x1, int y1, int x2, int y2){

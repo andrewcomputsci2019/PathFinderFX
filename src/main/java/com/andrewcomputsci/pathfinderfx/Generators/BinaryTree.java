@@ -23,17 +23,17 @@ public class BinaryTree implements MazeGenerator{
         this.grid = grid;
         this.width = width;
         this.height = height;
+        System.out.println("[DEBUG] -- started binary tree maze generation");
         for(int y = 0; y < height; y++){
             if(y%2 !=0)continue;
             for(int x=0; x < width; x++){
                 if(x%2!=0)continue;
-                System.out.println("passes: " + x + " " + y);
                 messageQueue.add(new Message(grid[y*width+x], CellState.Current));
                  createMaze(x, y);
                 messageQueue.add(new Message(grid[y*width+x], CellType.Traversable));
             }
         }
-        System.out.println("function exit");
+        System.out.println("[DEBUG] -- ended binary tree maze generation");
     }
 
     private void createMaze(int x, int y){
@@ -62,7 +62,6 @@ public class BinaryTree implements MazeGenerator{
         //connect two cells by setting cell between them as traversable
         int x = x2>x1?x2-1:x2;
         int y = y2>y1?y2-1:y2;
-        System.out.println("Connected cell: " + x + " " + y );
         messages.add(new Message(grid[y*width+x],CellType.Traversable));
     }
 }

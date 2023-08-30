@@ -23,6 +23,7 @@ public class Kruskal implements MazeGenerator{
         Set<Integer>[] setTable = new Set[grid.length];
         //each cell gets added to a set and we can track
         ArrayList<int[]> edgeList = new ArrayList<>();
+        System.out.println("[DEBUG] -- started Kruskal algorithm");
         for(int y = 0; y < height; y++){
             if(y%2 !=0) continue;
             for(int x = 0; x < width; x++){
@@ -46,6 +47,7 @@ public class Kruskal implements MazeGenerator{
             messages.add(new Message(grid[randomEdge[1]*width+randomEdge[0]],CellType.Traversable));
             messages.add(new Message(grid[randomEdge[3]*width+randomEdge[2]],CellType.Traversable));
         }
+        System.out.println("[DEBUG] -- ended Kruskal algorithm");
     }
     private Collection<int[]> getEdgesFromCell(int x, int y){
         ArrayList<int[]> edgeList = new ArrayList<>();
