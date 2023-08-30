@@ -3,6 +3,7 @@ package com.andrewcomputsci.pathfinderfx.Utils;
 import com.andrewcomputsci.pathfinderfx.Generators.BinaryTree;
 import com.andrewcomputsci.pathfinderfx.Generators.DFSRandom;
 import com.andrewcomputsci.pathfinderfx.Generators.MazeGenerator;
+import com.andrewcomputsci.pathfinderfx.Generators.PrimsRandom;
 import com.andrewcomputsci.pathfinderfx.Model.Algorithm;
 import com.andrewcomputsci.pathfinderfx.Model.Heuristic;
 import com.andrewcomputsci.pathfinderfx.Model.MazeType;
@@ -44,6 +45,9 @@ public class AlgorithmFactory {
             }
             case DFSRandom -> {
                 return new DFSRandom();
+            }
+            case Prims -> {
+                return new PrimsRandom();
             }
             default -> {
                 return null;
