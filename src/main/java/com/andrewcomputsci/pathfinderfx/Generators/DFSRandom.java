@@ -17,14 +17,14 @@ public class DFSRandom implements MazeGenerator{
 
     @Override
     public void generateMaze(CellRectangle[] grid, int width, int height, ConcurrentLinkedQueue<Message> messageQueue) {
-
         System.out.println("[DEBUG] -- started DFS maze gen");
         this.grid = grid;
         this.width = width;
         this.height = height;
         this.messages = messageQueue;
         ArrayList<int[]> cellStack = new ArrayList<>();
-        cellStack.add(new int[]{0,0});
+        Random rand = new Random();
+        cellStack.add(new int[]{rand.nextInt(0,width),rand.nextInt(0,height)});
         visited = new boolean[grid.length];
         Arrays.fill(visited,false);
         while (!cellStack.isEmpty()){
