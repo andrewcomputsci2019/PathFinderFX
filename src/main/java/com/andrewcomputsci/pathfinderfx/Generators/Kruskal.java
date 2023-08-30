@@ -40,7 +40,7 @@ public class Kruskal implements MazeGenerator{
             Set<Integer> sharedSet2 = setHashMap.get(randomEdge[2]+randomEdge[3]*width);
             sharedSet1.add(joinCells(randomEdge[0],randomEdge[1],randomEdge[2],randomEdge[3]));
             sharedSet1.addAll(sharedSet2);
-            setHashMap.put(randomEdge[2]+randomEdge[3]*width,sharedSet1);
+            sharedSet2.forEach(item->setHashMap.put(item,sharedSet1));
             messages.add(new Message(grid[randomEdge[1]*width+randomEdge[0]],CellType.Traversable));
             messages.add(new Message(grid[randomEdge[3]*width+randomEdge[2]],CellType.Traversable));
         }
