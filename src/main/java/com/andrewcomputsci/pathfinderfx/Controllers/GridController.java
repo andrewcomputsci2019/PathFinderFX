@@ -135,7 +135,10 @@ public class GridController {
             });
             rect.getInnerCell().stateProperty().addListener((observable, oldValue, newValue) -> {
                 if(newValue.equals(CellState.Unvisited)){
-                    rect.setFill(rect.getInnerCell().getType().getColor());
+                    if(rect.getInnerCell().weightProperty().get() == 0.0)
+                        rect.setFill(rect.getInnerCell().getType().getColor());
+                    else
+                        rect.setFill(colorInterpolate(rect.getInnerCell().weightProperty().get()));
                 }else {
                     rect.setFill(newValue.getColor());
                 }
@@ -362,6 +365,14 @@ public class GridController {
                 }
             }
         });
+        sideBar.getAddRandomWalls().setOnAction(event -> {
+            Random random = new Random();
+            for (CellRectangle rectangle: grid.getCellGrid()){
+                if(random.nextInt(0,Integer.MAX_VALUE)%8 == 0){
+                    rectangle.getInnerCell().typeProperty().set(CellType.Wall);
+                }
+            }
+        });
     }
 
     private void initMazeButtons(){
@@ -428,6 +439,7 @@ public class GridController {
             grid.changeGridDimension(Integer.parseInt(nums[0]),Integer.parseInt(nums[1]));
             addCellTypeListeners();
             initCellControls();
+            sideBar.getClearButton().fire();
         });
     }
 }

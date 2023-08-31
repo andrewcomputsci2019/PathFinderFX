@@ -2,7 +2,7 @@ package com.andrewcomputsci.pathfinderfx.Model;
 
 public enum MazeType {
     DFSRandom,
-    Recursive,
+    HuntAndKill,
     Prims,
     Kruskal,
     BinaryTree

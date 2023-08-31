@@ -49,6 +49,9 @@ public class AlgorithmFactory {
             case Kruskal -> {
                 return new Kruskal();
             }
+            case HuntAndKill -> {
+                return new HuntAndKill();
+            }
             default -> {
                 return null;
             }
