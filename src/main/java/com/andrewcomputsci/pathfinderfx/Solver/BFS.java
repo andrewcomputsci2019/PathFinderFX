@@ -87,7 +87,7 @@ public class BFS implements PathFinderSolver {
             path.add(0, grid[index]);
         }
         System.out.println("[DEBUG] -- Finished Creating SET: " + (System.nanoTime() - sysTime) + "ms");
-        return new Statistics(path, passes, deltaTime, path.size());
+        return new Statistics(path, passes, deltaTime, path.size()+1);
     }
 
 

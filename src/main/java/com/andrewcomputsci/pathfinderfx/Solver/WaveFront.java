@@ -121,6 +121,6 @@ public class WaveFront implements PathFinderSolver {
             }
             //search around curr find min node, set as new curr
         }
-        return new Statistics(path, passes, System.nanoTime() - delta, path.size());
+        return new Statistics(path, passes, System.nanoTime() - delta, path.size()+1);
     }
 }

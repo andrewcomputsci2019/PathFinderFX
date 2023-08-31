@@ -180,6 +180,6 @@ public class DFS implements PathFinderSolver {
             path.add(0, grid[index]);
 
         }
-        return new Statistics(path, passes, System.nanoTime() - timeInit, path.size());
+        return new Statistics(path, passes, System.nanoTime() - timeInit, path.size()+1);
     }
 }

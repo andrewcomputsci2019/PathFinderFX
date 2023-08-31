@@ -18,7 +18,7 @@ public class Dijkstra implements PathFinderSolver {
         Arrays.fill(visited, false);
         for (int i = 0; i < grid.length; i++) {
             if (grid[i].getInnerCell().typeProperty().get().equals(CellType.Source)) {
-                occurredCost[i] = grid[i].getInnerCell().weightProperty().get();
+                occurredCost[i] = 0;
                 int y = i / width;
                 int x = i - y * width;
                 searchQueue.add(new int[]{x, y, x, y});
