@@ -364,6 +364,10 @@ public class GridController {
     }
 
     private void initMazeButtons() {
+        Timeline line = new Timeline();
+        line.setAutoReverse(false);
+        line.setCycleCount(Animation.INDEFINITE);
+        line.rateProperty().bind(animationRateSlider.valueProperty());
         sideBar.getMazeGenButton().setOnAction(event -> {
             System.out.println("Button Pressed");
             if (editableState) {
@@ -378,7 +382,6 @@ public class GridController {
                         return null;
                     }
                 };
-                Timeline line = new Timeline();
                 line.getKeyFrames().setAll(new KeyFrame(Duration.millis(10), action -> {
                     if (!queue.isEmpty()) {
                         Message message = queue.poll();
@@ -392,9 +395,7 @@ public class GridController {
                         line.stop();
                     }
                 }));
-                line.setAutoReverse(false);
-                line.setCycleCount(Animation.INDEFINITE);
-                task.setOnRunning(event1 -> line.playFromStart());
+                task.setOnRunning(event1 -> line.play());
                 task.setOnSucceeded(event1 -> editableState = true);
                 task.setOnFailed(event1 -> editableState = true);
                 algoExecutor.execute(task);
