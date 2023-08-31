@@ -31,7 +31,7 @@ public class BFS implements PathFinderSolver {
             int[] array = searchQueue.poll();
             int x = array[0];
             int y = array[1];
-            if(visited[y*width+x]) continue;
+            if (visited[y * width + x]) continue;
             queue.add(new Message(grid[y * width + x], CellState.Current));
             if ((y - 1) > -1 && !visited[(y - 1) * width + x] && !grid[(y - 1) * width + x].getInnerCell().getType().equals(CellType.Wall)) {
                 if (grid[(y - 1) * width + x].getInnerCell().getType().equals(CellType.Target)) {
@@ -48,7 +48,7 @@ public class BFS implements PathFinderSolver {
                     return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[y * width + (x + 1)], CellState.Expanded));
-                searchQueue.add(new int[]{x+1,y});
+                searchQueue.add(new int[]{x + 1, y});
                 predecessorTable[y * width + (x + 1)] = y * width + x;
             }
             if (((y + 1) < height) && !visited[(y + 1) * width + x] && !grid[(y + 1) * width + x].getInnerCell().getType().equals(CellType.Wall)) {
@@ -57,7 +57,7 @@ public class BFS implements PathFinderSolver {
                     return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[(y + 1) * width + x], CellState.Expanded));
-                searchQueue.add(new int[]{x,y+1});
+                searchQueue.add(new int[]{x, y + 1});
                 predecessorTable[(y + 1) * width + x] = y * width + x;
             }
             if ((x - 1) > -1 && !visited[y * width + (x - 1)] && !grid[y * width + (x - 1)].getInnerCell().getType().equals(CellType.Wall)) {
@@ -66,11 +66,11 @@ public class BFS implements PathFinderSolver {
                     return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[y * width + (x - 1)], CellState.Expanded));
-                searchQueue.add(new int[]{x-1,y});
+                searchQueue.add(new int[]{x - 1, y});
                 predecessorTable[y * width + (x - 1)] = y * width + x;
             }
-            visited[y*width+x] = true;
-            queue.add(new Message(grid[y*width+x],CellState.Visited));
+            visited[y * width + x] = true;
+            queue.add(new Message(grid[y * width + x], CellState.Visited));
             passes++;
         }
         return new Statistics(null, passes, System.nanoTime() - deltaTime, 0);
@@ -86,7 +86,7 @@ public class BFS implements PathFinderSolver {
             index = predecessorTable[index];
             path.add(0, grid[index]);
         }
-        System.out.println("[DEBUG] -- Finished Creating SET: " + (System.nanoTime()-sysTime)+"ms");
+        System.out.println("[DEBUG] -- Finished Creating SET: " + (System.nanoTime() - sysTime) + "ms");
         return new Statistics(path, passes, deltaTime, path.size());
     }
 

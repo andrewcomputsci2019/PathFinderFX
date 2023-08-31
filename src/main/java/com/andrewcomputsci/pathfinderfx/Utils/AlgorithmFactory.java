@@ -6,8 +6,6 @@ import com.andrewcomputsci.pathfinderfx.Model.Heuristic;
 import com.andrewcomputsci.pathfinderfx.Model.MazeType;
 import com.andrewcomputsci.pathfinderfx.Solver.*;
 
-import java.util.Optional;
-
 public class AlgorithmFactory {
 
 

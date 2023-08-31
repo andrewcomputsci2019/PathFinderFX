@@ -146,7 +146,7 @@ public class SideBar {
                 }
             }
         });
-        algorithmSelectionBox.setItems(FXCollections.observableArrayList(Algorithm.AStar, Algorithm.BFS, Algorithm.BFSGreedy, Algorithm.DFS,Algorithm.Dijkstra, Algorithm.WaveFront));
+        algorithmSelectionBox.setItems(FXCollections.observableArrayList(Algorithm.AStar, Algorithm.BFS, Algorithm.BFSGreedy, Algorithm.DFS, Algorithm.Dijkstra, Algorithm.WaveFront));
         algorithmSelectionBox.getSelectionModel().selectFirst();
         algorithmSelectionWrapper.getChildren().addAll(algorithmSelectionLabel, algorithmSelectionBox);
         heuristicSelectionWrapper = new HBox(5);
@@ -168,9 +168,7 @@ public class SideBar {
         });
         heuristicSelectionBox.setItems(FXCollections.observableArrayList(Heuristic.Chebyshev, Heuristic.Euclidean, Heuristic.Manhattan));
         heuristicSelectionBox.getSelectionModel().selectFirst();
-        algorithmSelectionBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            heuristicSelectionBox.setDisable(!newValue.equals(Algorithm.AStar) && !newValue.equals(Algorithm.BFSGreedy));
-        });
+        algorithmSelectionBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> heuristicSelectionBox.setDisable(!newValue.equals(Algorithm.AStar) && !newValue.equals(Algorithm.BFSGreedy)));
         heuristicSelectionBox.setPrefWidth(125.0);
         algorithmSelectionBox.setPrefWidth(125.0);
         heuristicSelectionWrapper.setAlignment(Pos.CENTER);
@@ -267,7 +265,7 @@ public class SideBar {
         pathFound.getStyleClass().addAll(Styles.TEXT, Styles.TEXT_MUTED);
         pathCost.getStyleClass().addAll(Styles.TEXT, Styles.TEXT_MUTED);
         deltaTime.getStyleClass().addAll(Styles.TEXT, Styles.TEXT_MUTED);
-        iterations.getStyleClass().addAll(Styles.TEXT,Styles.TEXT_MUTED);
+        iterations.getStyleClass().addAll(Styles.TEXT, Styles.TEXT_MUTED);
 
         pathFound.setAlignment(Pos.CENTER_LEFT);
         pathCost.setAlignment(Pos.CENTER_LEFT);
@@ -284,11 +282,11 @@ public class SideBar {
 
         HBox iterationContainer = new HBox(1);
         iterationContainer.setAlignment(Pos.CENTER);
-        VBox.setMargin(iterationContainer,new Insets(2.5));
+        VBox.setMargin(iterationContainer, new Insets(2.5));
         Label iterationsLabel = new Label("Total Iterations: ");
         iterationsLabel.setAlignment(Pos.CENTER_RIGHT);
-        iterationsLabel.getStyleClass().addAll(Styles.TEXT,Styles.ACCENT);
-        iterationContainer.getChildren().addAll(iterationsLabel,iterations);
+        iterationsLabel.getStyleClass().addAll(Styles.TEXT, Styles.ACCENT);
+        iterationContainer.getChildren().addAll(iterationsLabel, iterations);
 
         HBox pathCostHBox = new HBox(1);
         pathCostHBox.setAlignment(Pos.CENTER);
@@ -306,7 +304,7 @@ public class SideBar {
         elaspedTimeLabel.setAlignment(Pos.CENTER_RIGHT);
         elapsedTimeBox.getChildren().addAll(elaspedTimeLabel, deltaTime);
 
-        statContainer.getChildren().addAll(pathContainer,iterationContainer, pathCostHBox, elapsedTimeBox);
+        statContainer.getChildren().addAll(pathContainer, iterationContainer, pathCostHBox, elapsedTimeBox);
         statContainer.setStyle("-fx-border-width: 2px; -fx-border-radius: 5px; -fx-border-color: gray;");
         rootContainer.getChildren().add(statContainer);
 

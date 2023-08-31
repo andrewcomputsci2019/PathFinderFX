@@ -7,12 +7,13 @@ public class Message {
     private final CellRectangle cellToBeChanged;
     private final CellType cellType;
 
-    public Message(CellRectangle cell, CellState type){
+    public Message(CellRectangle cell, CellState type) {
         cellToBeChanged = cell;
         newType = type;
         cellType = null;
     }
-    public Message(CellRectangle cell, CellType type){
+
+    public Message(CellRectangle cell, CellType type) {
         cellToBeChanged = cell;
         cellType = type;
         newType = null;
@@ -25,5 +26,8 @@ public class Message {
     public CellRectangle getCellToBeChanged() {
         return cellToBeChanged;
     }
-    public CellType getCellType(){return cellType;}
+
+    public CellType getCellType() {
+        return cellType;
+    }
 }

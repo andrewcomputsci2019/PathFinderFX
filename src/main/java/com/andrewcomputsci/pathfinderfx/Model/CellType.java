@@ -30,10 +30,12 @@ public enum CellType {
     Target(Color.TEAL); //blue/teal
 
     private final Paint color;
-    CellType(Paint color){
+
+    CellType(Paint color) {
         this.color = color;
     }
-    public Paint getColor(){
+
+    public Paint getColor() {
         return color;
     }
 

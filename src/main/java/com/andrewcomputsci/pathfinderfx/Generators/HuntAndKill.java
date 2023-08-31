@@ -16,7 +16,7 @@ public class HuntAndKill implements MazeGenerator{
     private int width;
     private int height;
     private ConcurrentLinkedQueue<Message> messages;
-    private Random random = new Random();
+    private final Random random = new Random();
     private CellRectangle[] grid;
 
     @Override
