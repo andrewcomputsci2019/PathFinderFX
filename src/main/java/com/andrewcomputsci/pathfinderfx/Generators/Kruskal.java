@@ -40,7 +40,6 @@ public class Kruskal implements MazeGenerator {
             if (setTable[(randomEdge[0] + randomEdge[1] * width)].contains(randomEdge[2] + randomEdge[3] * width)) {
                 continue;
             }
-            ;
             Set<Integer> sharedSet1 = setTable[(randomEdge[0] + randomEdge[1] * width)];
             Set<Integer> sharedSet2 = setTable[(randomEdge[2] + randomEdge[3] * width)];
             sharedSet1.add(joinCells(randomEdge[0], randomEdge[1], randomEdge[2], randomEdge[3]));

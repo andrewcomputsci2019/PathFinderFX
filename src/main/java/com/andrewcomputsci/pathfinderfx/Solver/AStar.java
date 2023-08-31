@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class AStar implements PathFinderSolver {
-    private Heuristics.Functor heuristic;
+    private final Heuristics.Functor heuristic;
 
     public AStar(Heuristics.Functor heuristic) {
         this.heuristic = heuristic;

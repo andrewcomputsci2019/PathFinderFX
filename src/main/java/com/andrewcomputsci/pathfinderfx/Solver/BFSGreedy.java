@@ -28,8 +28,6 @@ public class BFSGreedy implements PathFinderSolver {
         int startY = 0;
         for (int i = 0; i < grid.length; i++) {
             if (grid[i].getInnerCell().typeProperty().get().equals(CellType.Source)) {
-                int y = i / width;
-                int x = i % width;
                 predecessorTable[i] = -1;
                 startX = i % width;
                 startY = i / width;
