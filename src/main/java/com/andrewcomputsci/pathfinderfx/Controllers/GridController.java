@@ -195,7 +195,7 @@ public class GridController {
                 }
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
                     changeCellType(rect);
-                } else if (event.getButton().equals(MouseButton.SECONDARY)) {
+                } else if (event.getButton().equals(MouseButton.SECONDARY) && !event.isControlDown()) {
                     CellType type = rect.getInnerCell().getType();
                     targetPlaced = targetPlaced && !type.equals(CellType.Target);
                     sourcePlaced = sourcePlaced && !type.equals(CellType.Source);
