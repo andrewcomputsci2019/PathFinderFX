@@ -27,7 +27,11 @@ public class HuntAndKill implements MazeGenerator{
         messages = messageQueue;
         visited = new boolean[grid.length];
         Arrays.fill(visited,false);
-        walk(random.nextInt(0,width), random.nextInt(0,height));
+        int startX = random.nextInt(0,width);
+        int startY = random.nextInt(0,height);
+        startX = startX%2==0?startX:startX-1;
+        startY = startY%2==0?startY:startY-1;
+        walk(startX, startY);
         while (true){
             boolean found = false;
             for(int y = 0; y < height; y++){
