@@ -82,6 +82,7 @@ public class WaveFront implements PathFinderSolver {
         }
         List<CellRectangle> path = new ArrayList<>();
         int[] curr = new int[]{startX, startY};
+        path.add(grid[startY*width+startX]);
         while (curr != null) {
             int x = curr[0];
             int y = curr[1];

@@ -39,12 +39,12 @@ public class BFSGreedy implements PathFinderSolver {
                 target[1] = y;
             }
         }
+        visited[startY*width+startX] = true;
         searchQueue.add(new int[]{startX, startY});
         deltaTime = System.nanoTime();
         while (!searchQueue.isEmpty()) {
             int x = searchQueue.peek()[0];
             int y = searchQueue.poll()[1];
-            if (visited[y * width + x]) continue;
             queue.add(new Message(grid[y * width + x], CellState.Current));
             if ((y - 1) > -1 && !visited[(y - 1) * width + x] && !grid[(y - 1) * width + x].getInnerCell().typeProperty().get().equals(CellType.Wall)) {
                 if (grid[(y - 1) * width + x].getInnerCell().getType().equals(CellType.Target)) {
@@ -52,6 +52,7 @@ public class BFSGreedy implements PathFinderSolver {
                     return BFS.getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[(y - 1) * width + x], CellState.Expanded));
+                visited[(y - 1) * width + x] = true;
                 searchQueue.add(new int[]{x, y - 1});
                 predecessorTable[(y - 1) * width + x] = y * width + x;
             }
@@ -62,6 +63,7 @@ public class BFSGreedy implements PathFinderSolver {
                 }
                 queue.add(new Message(grid[y * width + (x + 1)], CellState.Expanded));
                 searchQueue.add(new int[]{x + 1, y});
+                visited[y * width + (x + 1)] = true;
                 predecessorTable[y * width + (x + 1)] = y * width + x;
             }
             if ((y + 1) < height && !visited[(y + 1) * width + x] && !grid[(y + 1) * width + x].getInnerCell().typeProperty().get().equals(CellType.Wall)) {
@@ -71,6 +73,7 @@ public class BFSGreedy implements PathFinderSolver {
                 }
                 queue.add(new Message(grid[(y + 1) * width + x], CellState.Expanded));
                 searchQueue.add(new int[]{x, y + 1});
+                visited[(y + 1) * width + x] = true;
                 predecessorTable[(y + 1) * width + x] = y * width + x;
             }
             if ((x - 1) > -1 && !visited[y * width + (x - 1)] && !grid[y * width + (x - 1)].getInnerCell().typeProperty().get().equals(CellType.Wall)) {
@@ -79,10 +82,10 @@ public class BFSGreedy implements PathFinderSolver {
                     return BFS.getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y);
                 }
                 queue.add(new Message(grid[y * width + (x - 1)], CellState.Expanded));
+                visited[y * width + (x - 1)] = true;
                 searchQueue.add(new int[]{x - 1, y});
                 predecessorTable[y * width + (x - 1)] = y * width + x;
             }
-            visited[y * width + x] = true;
             queue.add(new Message(grid[y * width + x], CellState.Visited));
             passes++;
         }
