@@ -4,12 +4,12 @@ A program inspired by the design of [Francisco Zacarias own pathfinder](https://
 The program supports a verity of four directional [pathfinding](#supported-pathfinding-algorithms) and [maze](#supported-maze-generation-algorithms) generation algorithms
 ___
 ## How to Run
-Preferred way to run the program is to clone the source code and imported into a gradle build supported
+The preferred way to run the program is to clone the source code and import it into a Gradle build-supported
 I.D.E, like IntelliJ, and use it to run and build the program. Otherwise, you can use the provided gradle wrapper
 to execute and build the program as shown below.
 ```shell
 ##cd into project root dir with the gradlew and gradlew.bat file
-##if on windows run the gradlew.bat file
+##if on Windows run the gradlew.bat file
 ##change /path_to_jdk_directory to your jdk distribution
 ./gradlew -Dorg.gradle.java.home=/path_to_jdk17_directory
 ./gradlew run
@@ -22,9 +22,9 @@ is being utilized and heuristic if applicable, create mazes using different algo
 and stop the searching of the current using the selected algorithm.\
 To the right of the program control sidebar is the grid. The grid allows the user to drag their mouse to add or remove cells
 to the grid. Holding/pressing left click will add cell/cells of the selected cell type and holding/pressing right click will remove cell/cells. Control right
-mouse click on the grid will bring up a context menu that provides some fine turning, such as accelerating/decelerating the animation speed,
+mouse click on the grid will bring up a context menu that provides some fine-tuning, such as accelerating/decelerating the animation speed,
 and the ability to run the garbage collector to free up excess memory the JVM is holding onto. The program only allows
-a single source and a single target to placed on the grid, if the user wants to change their locations they must first remove them from the grid and
+a single source and a single target to be placed on the grid, if the user wants to change their locations they must first remove them from the grid and
 replace them in the desired position.
 ___
 ## Demo Video
@@ -45,9 +45,9 @@ ___
 * [Wave Front Propagation](#wave-front-propagation)
 ___
 ### A* (A-star)
-[A*](https://en.wikipedia.org/wiki/A*_search_algorithm) is a single pair pathfinding algorithm that leverages a heuristics to help it efficiently search a weighted graph to find a near optimal or optimal path solution\
+[A*](https://en.wikipedia.org/wiki/A*_search_algorithm) is a single pair pathfinding algorithm that leverages heuristics to help it efficiently search a weighted graph to find a near-optimal or optimal path solution\
 This program implementation allows the support of three different Heuristics: Manhattan, Euclidean, and Chebyshev\
-Pseudo code
+Pseudocode
 ```
 h(x):double = ranking heuristic
 path(node,precessor):List<node>
@@ -108,9 +108,9 @@ video of bfs here
 ___
 ### BREADTH FIRST SEARCH GREEDY
 [BFS Greedy](https://en.wikipedia.org/wiki/Best-first_search#Greedy_BFS) is a variation of BFS that uses a heuristic function to evaluate adjacent cells to figure out what order
-to visit them in. BFS Greedy in most variations uses some sort of min heap or similar structure to handel the order of cell
+to visit them in. BFS Greedy in most variations uses some sort of min heap or similar structure to handle the order of cell
 traversal.\
-Pseudo code
+Pseudocode
 ```
   h(x):double = ranking heuristic
   path(node,predecessor):List<node>
@@ -137,10 +137,10 @@ Pseudo code
 ```
 ___
 ### DEPTH FIRST SEARCH (DFS)
-[DFS](https://en.wikipedia.org/wiki/Depth-first_search) similar to BFS is a graph traversal that expands only a single search path until a dead end is meet, where it then back-tracks 
+[DFS](https://en.wikipedia.org/wiki/Depth-first_search) similar to BFS is a graph traversal that expands only a single search path until a dead end is met, where it then back-tracks 
 to an unvisited node and continues this process until all nodes have been searched or the goal has been found. This algorithm does
 not guarantee to find the shortest path.\
-Pseudo code
+Pseudocode
 ```
   path(node,predecessor):List<node>
       list = []
@@ -168,10 +168,10 @@ Pseudo code
 dfs video here
 ___
 ### Dijkstra
-[Dijkstra](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) is weighted graph single source pathfinding algorithm that **guarantees** to find the shortest path. This algorithm
+[Dijkstra](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) is a weighted graph single source pathfinding algorithm that **guarantees** to find the shortest path. This algorithm
 leverages a greedy process in which it picks the shortest edge plus occurred weight from the list of current queued cells, it repeats this process
 until the goal has been found or all cells have been searched\
-Pseudo code
+Pseudocode
 ```
 path(node,predecessor): List<node>
   list = []
@@ -199,10 +199,10 @@ Dijkstra(start, goal):
 video goes here 
 ___
 ### Wave Front Propagation
-[Wave Front Propagation](https://en.wikipedia.org/wiki/Wavefront_expansion_algorithm) works like BFS in the way it respects the order of cells as they are added but differs as it starts from the target and expands out ward.
+[Wave Front Propagation](https://en.wikipedia.org/wiki/Wavefront_expansion_algorithm) works like BFS in the way it respects the order of cells as they are added but differs as it starts from the target and expands outward.
 It searches the entire grid assigning a number to each cell representing the number of steps required to reach that cell. Once all cells have been searched the algorithm
-then chooses the least weighted cell around the source and repeats until the target is reached guarantying the shortest path.\
-Pseudo code
+then chooses the least weighted cell around the source and repeats until the target is reached guaranteeing the shortest path.\
+Pseudocode
 ```
 path(start,goal,cost[]):List<node>
   path  = []
@@ -258,9 +258,9 @@ ___
 ### Depth First Search Randomized Backtracking
 [Depth First Search Randomized Backtracking](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_depth-first_search) is an extension of the DFS algorithm in which cells are traversed randomly 
 using the DFS algorithm. The process starts by choosing any cell randomly in the grid as the starting point and then choosing 
-a random unvisited neighboring cell and removing the wall between them and adding it to the stack. The last step in this process is to remove
+a random unvisited neighboring cell removing the wall between them and adding it to the stack. The last step in this process is to remove
 any cell from the stack once it has no unvisited neighboring cell remaining. The maze is generated once all cells have been removed from the stack\
-Pseudo code
+Pseudocode
 ```
   DFSRandomized(list{nodes}):
     stack = []
@@ -279,7 +279,7 @@ ___
 ### Kruskal
 [Kruskal](https://en.wikipedia.org/wiki/Kruskal%27s_algorithm) is a [minimum spanning tree](https://en.wikipedia.org/wiki/Minimum_spanning_tree)(MST) 
 algorithm that can be utilized to create a perfect maze. The algorithm starts by first creating a set for each cell that contains what cell their connected to.
-It then randomly selects an edge between two cells and checks weather their sets contain each other if so the edge if skipped otherwise the two cells are then
+It then randomly selects an edge between two cells and checks whether their sets contain each other if so the edge is skipped otherwise the two cells are then
 connected and their sets updated accordingly. This process continues till all edges have been exhausted, at which point a perfect maze has been created\
 Pseudo Code
 ```
@@ -288,9 +288,9 @@ Pseudo Code
 ___
 ### Hunt and Kill
 Hunt and Kill algorithm is a [random walk](https://en.wikipedia.org/wiki/Random_walk) algorithm that guarantees a perfect maze when it finishes. The algorithm starts
-by first picking a random cell to be starting point of the first random walk. The program then random walks across the grid
-and stops once no more steps can be taken, i.e. it's been boxed in. The algorithm then scans across grid to find a cell to be next
-starting point of the random walk, this cell must be adjacent to an already visited cell. The algorithm then random walks and repeat the process 
+by first picking a random cell to be the starting point of the first random walk. The program then random walks across the grid
+and stops once no more steps can be taken, i.e. it's been boxed in. The algorithm then scans across the grid to find a cell to be the next
+starting point of the random walk, this cell must be adjacent to an already visited cell. The algorithm then random walks and repeats the process 
 above until no valid starting points remain.\
 Pseudo Code
 ````
@@ -298,9 +298,9 @@ Pseudo Code
 ````
 ___
 ### Prims Randomized
-Prims Randomized is another MST based algorithm that can be used to create a perfect maze. The algorithm first starts by
-first picking a random cell in the grid. It then finds all the so-called frontier cells, these are cells that are adjacent but seperated by a cell 
-from current cell, and adds them to the set of potential future cells to visit. Prims then randomly picks one of the cells from future cells set and 
+Prims Randomized is another MST based algorithm that can be used to create a perfect maze. The algorithm starts by
+first picking a random cell in the grid. It then finds all the so-called frontier cells, which are cells that are adjacent but separated by a cell 
+from the current cell and adds them to the set of potential future cells to visit. Prims then randomly picks one of the cells from the future cells set, and then 
 finds a neighboring cell that has already been visited and joins them together. It then adds its frontier cells to the future cell set and repeats till
 no cells remain.\
 Pseudo Code
