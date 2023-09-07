@@ -1,7 +1,32 @@
 # Pathfinding Algorithm Visualizer
 ___
 A program inspired by the design of [Francisco Zacarias own pathfinder](https://github.com/FranciscoZacarias/Algorithm-Visualizer-JavaFX), written from the ground up using Java and JavaFX 17.
-The program supports a verity of four directional [pathfinding](#supported-pathfinding-algorithms) and [maze](#supported-maze-generation-algorithms) generation algorithms 
+The program supports a verity of four directional [pathfinding](#supported-pathfinding-algorithms) and [maze](#supported-maze-generation-algorithms) generation algorithms
+___
+## How to Run
+Preferred way to run the program is to clone the source code and imported into a gradle build supported
+I.D.E, like IntelliJ, and use it to run and build the program. Otherwise, you can use the provided gradle wrapper
+to execute and build the program as shown below.
+```shell
+##cd into project root dir with the gradlew and gradlew.bat file
+##if on windows run the gradlew.bat file
+##change /path_to_jdk_directory to your jdk distribution
+./gradlew -Dorg.gradle.java.home=/path_to_jdk17_directory
+./gradlew run
+```
+___
+## How to Use
+The left side of the screen is the program control section and allows the user
+to change the grid size, modify what cell type is selected, change what pathfinding algorithm
+is being utilized and heuristic if applicable, create mazes using different algorithms, and finally the ability to start
+and stop the searching of the current using the selected algorithm.\
+To the right of the program control sidebar is the grid. The grid allows the user to drag their mouse to add or remove cells
+to the grid. Holding/pressing left click will add cell/cells of the selected cell type and holding/pressing right click will remove cell/cells. Control right
+mouse click on the grid will bring up a context menu that provides some fine turning, such as accelerating/decelerating the animation speed,
+and the ability to run the garbage collector to free up excess memory the JVM is holding onto. The program only allows
+a single source and a single target to placed on the grid, if the user wants to change their locations they must first remove them from the grid and
+replace them in the desired position.
+___
 ## Demo Video
 
 ___
@@ -269,6 +294,7 @@ starting point of the random walk, this cell must be adjacent to an already visi
 above until no valid starting points remain.\
 Pseudo Code
 ````
+
 ````
 ___
 ### Prims Randomized
