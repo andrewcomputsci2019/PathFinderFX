@@ -19,7 +19,7 @@ ___
 The left side of the screen is the program control section and allows the user
 to change the grid size, modify what cell type is selected, change what pathfinding algorithm
 is being utilized and heuristic if applicable, create mazes using different algorithms, and finally the ability to start
-and stop the searching of the current using the selected algorithm.\
+and skip visualization of the current pathfinding algorithm.\
 To the right of the program control sidebar is the grid. The grid allows the user to drag their mouse to add or remove cells
 to the grid. Holding/pressing left click will add cell/cells of the selected cell type and holding/pressing right click will remove cell/cells. Control right
 mouse click on the grid will bring up a context menu that provides some fine-tuning, such as accelerating/decelerating the animation speed,
