@@ -28,7 +28,7 @@ a single source and a single target to be placed on the grid, if the user wants 
 replace them in the desired position.
 ___
 ## Demo Video
-![video](https://www.youtube.com/watch?v=Tt1ZOXGZ7Vw)
+[![video](https://i.ytimg.com/vi/Tt1ZOXGZ7Vw/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=Tt1ZOXGZ7Vw)
 ___
 ## Supported Pathfinding Algorithms
 * [A*](#a-a-star)(Supports Weights)
