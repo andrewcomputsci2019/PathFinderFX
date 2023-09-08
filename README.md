@@ -41,7 +41,7 @@ ___
   * Euclidean Heuristic
   * Chebyshev Heuristic
 * [Depth First Search (DFS)](#depth-first-search-dfs)
-* [Dijkstra](#dijkstra) (Supports Weights)
+* [Dijkstra](#dijkstra) (only works for weighted graphs)
 * [Wave Front Propagation](#wave-front-propagation)
 ___
 ### A* (A-star)
