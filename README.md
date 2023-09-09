@@ -107,8 +107,7 @@ Pseudo Code
 ```
 
 ***demo***
-
-
+[![video](https://i.ytimg.com/vi/8cu3DMnLPtk/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=8cu3DMnLPtk)
 ___
 ### BREADTH FIRST SEARCH GREEDY
 [BFS Greedy](https://en.wikipedia.org/wiki/Best-first_search#Greedy_BFS) is a variation of BFS that uses a heuristic function to evaluate adjacent cells to figure out what order
