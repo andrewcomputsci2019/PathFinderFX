@@ -73,7 +73,11 @@ A*(start, goal):
       searchQueue.add([nodes,node,weight+nodes.weight],h(nodes))
 ```
 ***demo***
-video of A* go here
+
+
+https://github.com/andrewcomputsci2019/PathFinderFX/assets/54915639/a0f9ef10-801a-4851-a9ef-044abecc01c3
+
+
 ___
 ### Breadth First Search (BFS)
 [BFS](https://en.wikipedia.org/wiki/Breadth-first_search#Bias_towards_nodes_of_high_degree) is a graph traversal and single source pathfinding algorithm, that expands in respect of the nodes added to the search, or in other words it explores
@@ -103,7 +107,7 @@ Pseudo Code
 ```
 
 ***demo***
-video of bfs here
+
 
 ___
 ### BREADTH FIRST SEARCH GREEDY
@@ -135,7 +139,9 @@ Pseudocode
         visited[nodes] = true;
         searchQueue.add(nodes,h(nodes))
 ```
+https://github.com/andrewcomputsci2019/PathFinderFX/assets/54915639/ffdbbd7e-f540-4077-a1ff-edb261e78119
 ___
+
 ### DEPTH FIRST SEARCH (DFS)
 [DFS](https://en.wikipedia.org/wiki/Depth-first_search) similar to BFS is a graph traversal that expands only a single search path until a dead end is met, where it then back-tracks 
 to an unvisited node and continues this process until all nodes have been searched or the goal has been found. This algorithm does
