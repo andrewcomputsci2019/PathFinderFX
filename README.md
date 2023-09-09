@@ -201,7 +201,7 @@ Dijkstra(start, goal):
       queue.add(nodes, occurredCost[nodes])
 ```
 ***demo***
-video goes here 
+ [![video](https://i.ytimg.com/vi/LeJfMaz5edY/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=LeJfMaz5edY)
 ___
 ### Wave Front Propagation
 [Wave Front Propagation](https://en.wikipedia.org/wiki/Wavefront_expansion_algorithm) works like BFS in the way it respects the order of cells as they are added but differs as it starts from the target and expands outward.
@@ -238,7 +238,7 @@ WaveFront(start, goal):
     return path(start,goal,cost)
 ```
 ***demo***
-put video here
+ [![video](https://i.ytimg.com/vi/JSsE4OVgRfI/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=JSsE4OVgRfI)
 ___
 ## Supported Maze Generation Algorithms
 * [Binary Tree](#binary-tree)
