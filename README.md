@@ -170,7 +170,7 @@ Pseudocode
         visited[nodes] = true
 ```
 ***demo***
-dfs video here
+[![video](https://i.ytimg.com/vi/6G0ewv1wMW4/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=6G0ewv1wMW4)
 ___
 ### Dijkstra
 [Dijkstra](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) is a weighted graph single source pathfinding algorithm that **guarantees** to find the shortest path. This algorithm
