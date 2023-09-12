@@ -300,7 +300,30 @@ starting point of the random walk, this cell must be adjacent to an already visi
 above until no valid starting points remain.\
 Pseudo Code
 ````
-
+hunt(nodes[]):
+  start = random node from nodes
+  visted = []
+  visited[start] = true
+  kill(start,visited)
+  while(true):
+    found = false
+    for(node in nodes and not in visited):
+      if(node has visited neighbor):
+        join(node, random visited neighbor)
+        walk(node,visited)
+        found = true
+        break
+    if(!found):
+      break   
+      
+kill(node start, visited[]):
+  visited[start] = true;
+  cells
+  while((cells = list of unvisted neighbors from start) is not empty):
+    cell = get random node from cells
+    visited[cell] = true
+    join(start,cell)
+    start = cell
 ````
 ___
 ### Prims Randomized
@@ -311,7 +334,17 @@ finds a neighboring cell that has already been visited and joins them together. 
 no cells remain.\
 Pseudo Code
 ```
-
+PrimsRandomized(nodes[]):
+  frontierCells = []
+  visited = []
+  start = random node from nodes[]
+  visited = [start]
+  frontierCells.add( get frontier cells from start)
+  while(frontierCells is not empty):
+    randomFrontier = random node from frontierCells
+    validVisitedNode = get random valid visited neighbor
+    join(randomFrontier,validVisitedNode)
+    frontierCells.add( get frontier cells from randomFrontier)
 ```
 ___
 ## Utilized Libraries
