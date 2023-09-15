@@ -289,7 +289,15 @@ It then randomly selects an edge between two cells and checks whether their sets
 connected and their sets updated accordingly. This process continues till all edges have been exhausted, at which point a perfect maze has been created\
 Pseudo Code
 ```
-
+Kruskal(nodes[]):
+  edges = [all edges in nodes] //add all edges to a set
+  pathSet = {node in nodes -> node : [node]} //create path set for all nodes with only that node in it to start
+  while(edges is not empty):
+    node1, node2 = get random edge and remove from edges
+    if(node2 not in pathSet[node1]):
+      join(node2, node1)
+      pathSet[node2] uion pathSet[node1] //update both sets to contain each other connected nodes
+  //once all edges have been iterated over return
 ```
 ___
 ### Hunt and Kill
