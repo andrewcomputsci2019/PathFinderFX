@@ -107,8 +107,7 @@ Pseudo Code
 ```
 
 ***demo***
-
-
+[![video](https://i.ytimg.com/vi/8cu3DMnLPtk/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=8cu3DMnLPtk)
 ___
 ### BREADTH FIRST SEARCH GREEDY
 [BFS Greedy](https://en.wikipedia.org/wiki/Best-first_search#Greedy_BFS) is a variation of BFS that uses a heuristic function to evaluate adjacent cells to figure out what order
@@ -171,7 +170,7 @@ Pseudocode
         visited[nodes] = true
 ```
 ***demo***
-dfs video here
+[![video](https://i.ytimg.com/vi/6G0ewv1wMW4/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=6G0ewv1wMW4)
 ___
 ### Dijkstra
 [Dijkstra](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) is a weighted graph single source pathfinding algorithm that **guarantees** to find the shortest path. This algorithm
@@ -202,7 +201,7 @@ Dijkstra(start, goal):
       queue.add(nodes, occurredCost[nodes])
 ```
 ***demo***
-video goes here 
+ [![video](https://i.ytimg.com/vi/LeJfMaz5edY/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=LeJfMaz5edY)
 ___
 ### Wave Front Propagation
 [Wave Front Propagation](https://en.wikipedia.org/wiki/Wavefront_expansion_algorithm) works like BFS in the way it respects the order of cells as they are added but differs as it starts from the target and expands outward.
@@ -239,7 +238,7 @@ WaveFront(start, goal):
     return path(start,goal,cost)
 ```
 ***demo***
-put video here
+ [![video](https://i.ytimg.com/vi/JSsE4OVgRfI/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=JSsE4OVgRfI)
 ___
 ## Supported Maze Generation Algorithms
 * [Binary Tree](#binary-tree)
