@@ -259,6 +259,7 @@ BinaryTree(list{nodes}):
       join(cells,node)
 ```
 ***demo***
+[![video](https://i.ytimg.com/vi/3ETcPLxgpZ0/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=3ETcPLxgpZ0)
 ___
 ### Depth First Search Randomized Backtracking
 [Depth First Search Randomized Backtracking](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_depth-first_search) is an extension of the DFS algorithm in which cells are traversed randomly 
@@ -280,6 +281,7 @@ Pseudocode
       stack.push(node)
 ```
 ***demo***
+[![video](https://i.ytimg.com/vi/EseRl5cTdNk/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=EseRl5cTdNk)
 ___
 ### Kruskal
 [Kruskal](https://en.wikipedia.org/wiki/Kruskal%27s_algorithm) is a [minimum spanning tree](https://en.wikipedia.org/wiki/Minimum_spanning_tree)(MST) 
@@ -298,6 +300,8 @@ Kruskal(nodes[]):
       pathSet[node2] uion pathSet[node1] //update both sets to contain each other connected nodes
   //once all edges have been iterated over return
 ```
+***demo***
+[![video](https://i.ytimg.com/vi/ZzaqWHcavBU/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=ZzaqWHcavBU)
 ___
 ### Hunt and Kill
 Hunt and Kill algorithm is a [random walk](https://en.wikipedia.org/wiki/Random_walk) algorithm that guarantees a perfect maze when it finishes. The algorithm starts
@@ -332,6 +336,8 @@ kill(node start, visited[]):
     join(start,cell)
     start = cell
 ````
+***demo***
+[![video](https://i.ytimg.com/vi/55qawcown6k/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=55qawcown6k)
 ___
 ### Prims Randomized
 Prims Randomized is another MST based algorithm that can be used to create a perfect maze. The algorithm starts by
@@ -353,6 +359,8 @@ PrimsRandomized(nodes[]):
     join(randomFrontier,validVisitedNode)
     frontierCells.add( get frontier cells from randomFrontier)
 ```
+***demo***
+[![video](https://i.ytimg.com/vi/J17v-zOE9Xo/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWihlMA8=&amp;rs=AOn4CLCyn4IBs5N2bEZW-IyPYhgaom-rlg)](https://www.youtube.com/watch?v=J17v-zOE9Xo)
 ___
 ## Utilized Libraries
 * [ControlsFX](https://github.com/controlsfx/controlsfx)
