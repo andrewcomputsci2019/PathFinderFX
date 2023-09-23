@@ -57,7 +57,7 @@ public class AStar implements PathFinderSolver {
             if ((y - 1) > -1 && !visited[(y - 1) * width + x] && !grid[(y - 1) * width + x].getInnerCell().typeProperty().get().equals(CellType.Wall)) {
                 if (grid[(y - 1) * width + x].getInnerCell().typeProperty().get().equals(CellType.Target)) {
                     deltaTime = System.nanoTime() - deltaTime;
-                    return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y, occurredCost[y * width + x] + (grid[(y - 1) * width + x].getInnerCell().weightProperty().get() == 0.0 ? 1 : grid[(y - 1) * width + x].getInnerCell().weightProperty().get()));
+                    return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y, occurredCost[y * width + x] + (grid[(y - 1) * width + x].getInnerCell().weightProperty().get() == 0.0 ? 1.0 : grid[(y - 1) * width + x].getInnerCell().weightProperty().get()));
                 }
 
                 queue.add(new Message(grid[(y - 1) * width + x], CellState.Expanded));
@@ -66,7 +66,7 @@ public class AStar implements PathFinderSolver {
             if ((x + 1) < width && !visited[y * width + (x + 1)] && !grid[y * width + (x + 1)].getInnerCell().typeProperty().get().equals(CellType.Wall)) {
                 if (grid[y * width + (x + 1)].getInnerCell().typeProperty().get().equals(CellType.Target)) {
                     deltaTime = System.nanoTime() - deltaTime;
-                    return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y, occurredCost[y * width + x] + (grid[y * width + (x + 1)].getInnerCell().weightProperty().get() == 0.0 ? 1 : grid[y * width + (x + 1)].getInnerCell().weightProperty().get()));
+                    return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y, occurredCost[y * width + x] + (grid[y * width + (x + 1)].getInnerCell().weightProperty().get() == 0.0 ? 1.0 : grid[y * width + (x + 1)].getInnerCell().weightProperty().get()));
                 }
 
                 queue.add(new Message(grid[y * width + (x + 1)], CellState.Expanded));
@@ -75,7 +75,7 @@ public class AStar implements PathFinderSolver {
             if ((y + 1) < height && !visited[(y + 1) * width + x] && !grid[(y + 1) * width + x].getInnerCell().typeProperty().get().equals(CellType.Wall)) {
                 if (grid[(y + 1) * width + x].getInnerCell().typeProperty().get().equals(CellType.Target)) {
                     deltaTime = System.nanoTime() - deltaTime;
-                    return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y, occurredCost[y * width + x] + (grid[(y + 1) * width + x].getInnerCell().weightProperty().get() == 0.0 ? 1 : grid[(y + 1) * width + x].getInnerCell().weightProperty().get()));
+                    return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y, occurredCost[y * width + x] + (grid[(y + 1) * width + x].getInnerCell().weightProperty().get() == 0.0 ? 1.0 : grid[(y + 1) * width + x].getInnerCell().weightProperty().get()));
                 }
                 queue.add(new Message(grid[(y + 1) * width + x], CellState.Expanded));
                 searchQueue.add(new int[]{x, y + 1, x, y});
@@ -83,7 +83,7 @@ public class AStar implements PathFinderSolver {
             if ((x - 1) > -1 && !visited[y * width + (x - 1)] && !grid[y * width + (x - 1)].getInnerCell().typeProperty().get().equals(CellType.Wall)) {
                 if (grid[y * width + (x - 1)].getInnerCell().typeProperty().get().equals(CellType.Target)) {
                     deltaTime = System.nanoTime() - deltaTime;
-                    return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y, occurredCost[y * width + x] + (grid[y * width + (x - 1)].getInnerCell().weightProperty().get() == 0.0 ? 1 : grid[y * width + (x - 1)].getInnerCell().weightProperty().get()));
+                    return getStatistics(grid, width, predecessorTable, passes, deltaTime, x, y, occurredCost[y * width + x] + (grid[y * width + (x - 1)].getInnerCell().weightProperty().get() == 0.0 ? 1.0 : grid[y * width + (x - 1)].getInnerCell().weightProperty().get()));
                 }
                 queue.add(new Message(grid[y * width + (x - 1)], CellState.Expanded));
                 searchQueue.add(new int[]{(x - 1), y, x, y});
